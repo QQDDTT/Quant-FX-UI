@@ -1,0 +1,38 @@
+﻿{
+    "audit_time":  "2026-10-17 04:07 UTC",
+    "overall_health_score":  100,
+    "total_assets_audited":  36,
+    "total_passed":  36,
+    "dimensions":  [
+                       {
+                           "id":  "D1",
+                           "name":  "Schema 结构完整性",
+                           "status":  "100% PASS",
+                           "desc":  "严格满足 datetime, open, high, low, close 规范字段"
+                       },
+                       {
+                           "id":  "D2",
+                           "name":  "物理极值有效性",
+                           "status":  "100% PASS",
+                           "desc":  "数学满足 High \u003e= max(O,C,L) 且 Low \u003c= min(O,C,H)，零倒挂"
+                       },
+                       {
+                           "id":  "D3",
+                           "name":  "微观跳空波动率过滤",
+                           "status":  "100% PASS",
+                           "desc":  "单根 5min K 线外汇 300 Pips / 黄金 3000 Pips 动态阈值"
+                       },
+                       {
+                           "id":  "D4",
+                           "name":  "Pip 点值规范化标定",
+                           "status":  "100% PASS",
+                           "desc":  "日元系/黄金标定 2 位，直盘/欧盘严格标定 4~5 位"
+                       },
+                       {
+                           "id":  "D5",
+                           "name":  "时序单调倒序唯一性",
+                           "status":  "100% PASS",
+                           "desc":  "基于哈希字典去重，时序严格单调递减，零重复时间戳"
+                       }
+                   ]
+}

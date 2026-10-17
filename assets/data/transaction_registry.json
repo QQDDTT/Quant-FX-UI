@@ -1,0 +1,45 @@
+﻿{
+    "updated_at":  "2026-10-17 04:07 UTC",
+    "transactions":  [
+                         {
+                             "tx_id":  "TX-20261011-001",
+                             "category":  "BASE_DATA",
+                             "title":  "全市场 12 只核心标的 3 级时序全量冷启动回补",
+                             "status":  "SUCCESS",
+                             "duration_sec":  270,
+                             "requests_consumed":  36,
+                             "data_produced":  "179,988 根 K 线落盘",
+                             "operator":  "sync_forex_base_data.ps1"
+                         },
+                         {
+                             "tx_id":  "TX-20261011-002",
+                             "category":  "AUDIT_GATE",
+                             "title":  "5 维数据质量与时序连续性全面体检",
+                             "status":  "SUCCESS",
+                             "duration_sec":  28,
+                             "requests_consumed":  0,
+                             "data_produced":  "100.0% 合规健康度 (36/36 标的通过)",
+                             "operator":  "audit_base_data.ps1"
+                         },
+                         {
+                             "tx_id":  "TX-20261011-003",
+                             "category":  "DATA_SANITIZER",
+                             "title":  "基础数据湖重复时间戳去重与自适应极值校准",
+                             "status":  "SUCCESS",
+                             "duration_sec":  18,
+                             "requests_consumed":  0,
+                             "data_produced":  "修复 11 处重复与微毫倒挂价差",
+                             "operator":  "clean_base_data.ps1"
+                         },
+                         {
+                             "tx_id":  "TX-20261011-004",
+                             "category":  "BASE_DATA_P0",
+                             "title":  "【P0 优先级】优先同步 12 只标的当日最新结算 K 线",
+                             "status":  "SUCCESS",
+                             "duration_sec":  90,
+                             "requests_consumed":  12,
+                             "data_produced":  "最新结算行情即刻对齐，增量哈希去重入库",
+                             "operator":  "sync_forex_base_data.ps1"
+                         }
+                     ]
+}
