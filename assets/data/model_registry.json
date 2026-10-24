@@ -1,0 +1,30 @@
+[
+  {
+    "model_id": "LGBM_ALPHA_CLUSTER_MAJOR_TREND_V1",
+    "stage": "EXPERIMENTAL",
+    "created_at": "2026-10-23T14:26:19.932369Z",
+    "algo": "LightGBM",
+    "cluster": "MAJOR_TREND",
+    "metrics_summary": {
+      "sharpe_ratio": -0.09,
+      "max_drawdown_pct": 17616.52,
+      "profit_loss_ratio": 0.94,
+      "win_rate_pct": 49.01,
+      "total_return_pct": -42116.45,
+      "rank_ic": 0.0308
+    },
+    "self_contained": true
+  },
+  {
+    "model_id": "LGBM_MACRO_GLOBAL_REGIME_V1",
+    "stage": "PRODUCTION_CANDIDATE",
+    "created_at": "2026-10-23T14:26:16.135469Z",
+    "algo": "LightGBM",
+    "cluster": null,
+    "metrics_summary": {
+      "validation_samples": 832,
+      "status": "CONVERGED_SUCCESS"
+    },
+    "self_contained": true
+  }
+]

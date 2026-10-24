@@ -1,0 +1,239 @@
+/* ==============================================================================
+   Quant-FX Research - 全局视觉与现代外汇量化展示大盘样式表 (style.css)
+   基于纯原生现代 CSS，完全零外部依赖，极简深色极客设计
+   ============================================================================== */
+
+:root {
+  /* 基础暗黑背景与面板色阶 */
+  --bg-canvas: #0D1117;
+  --bg-surface: #161B22;
+  --bg-subtle: #1F242C;
+  --bg-glass: rgba(22, 27, 34, 0.85);
+  --border-default: #30363D;
+  --border-muted: #21262D;
+
+  /* 文字色阶 */
+  --text-primary: #E6EDF3;
+  --text-secondary: #8B949E;
+  --text-muted: #6E7681;
+
+  /* 外汇核心多空与资产高光色 */
+  --color-accent: #58A6FF;
+  --color-bull: #3FB950;
+  --color-bear: #F85149;
+  --color-gold: #D29922;
+  --color-purple: #BC8CFF;
+  --color-cyan: #39C5BB;
+
+  /* 字体家族 */
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', 'Roboto Mono', Consolas, monospace;
+
+  /* 排版尺寸与行高 */
+  --line-height-normal: 1.65;
+  --max-content-width: 1240px;
+}
+
+/* 基础重置 */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: var(--bg-canvas);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  line-height: var(--line-height-normal);
+  font-size: 15px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-default) var(--bg-canvas);
+}
+
+/* 全局滚动条美化 */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-canvas);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border-default);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-muted);
+}
+
+/* 链接样式 */
+a {
+  color: var(--color-accent);
+  text-decoration: none;
+  transition: opacity 0.2s ease;
+}
+a:hover {
+  text-decoration: underline;
+  opacity: 0.85;
+}
+
+/* 极简毛玻璃顶栏导航 */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background-color: var(--bg-glass);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border-default);
+  transition: background-color 0.3s ease;
+}
+
+.nav-container {
+  max-width: var(--max-content-width);
+  margin: 0 auto;
+  padding: 0.85rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.brand-logo {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  letter-spacing: -0.5px;
+}
+
+.brand-logo img, .brand-logo svg {
+  width: 28px;
+  height: 28px;
+}
+
+.brand-logo span {
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 2px 7px;
+  border-radius: 4px;
+  background: rgba(88, 166, 255, 0.15);
+  color: var(--color-accent);
+  border: 1px solid rgba(88, 166, 255, 0.3);
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.nav-item {
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  padding: 0.45rem 0.85rem;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+
+.nav-item:hover {
+  color: var(--text-primary);
+  background-color: var(--bg-subtle);
+  text-decoration: none;
+}
+
+.nav-item.active {
+  color: var(--color-accent);
+  background-color: rgba(88, 166, 255, 0.12);
+  font-weight: 600;
+}
+
+.menu-toggle {
+  display: none;
+  background: none;
+  border: 1px solid var(--border-default);
+  color: var(--text-primary);
+  font-size: 1.2rem;
+  padding: 0.3rem 0.6rem;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+/* 主容器 */
+.docs-container {
+  max-width: var(--max-content-width);
+  margin: 0 auto;
+  padding: 2rem 1.5rem 4rem;
+}
+
+/* 文章正文流式布局 */
+.content-stream {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+}
+
+/* Hero 文章头部 */
+.article-header {
+  border-bottom: 1px solid var(--border-default);
+  padding-bottom: 1.8rem;
+}
+
+.article-title {
+  font-size: 2.2rem;
+  font-weight: 800;
+  letter-spacing: -0.8px;
+  line-height: 1.25;
+  color: var(--text-primary);
+  margin-bottom: 0.75rem;
+}
+
+.article-subtitle {
+  font-size: 1.05rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  max-width: 900px;
+}
+
+.article-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1.2rem;
+  margin-top: 1.2rem;
+  font-size: 0.82rem;
+  color: var(--text-muted);
+}
+
+.article-meta span {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+/* 等宽数字排版 */
+.tabular-numbers {
+  font-variant-numeric: tabular-nums;
+  font-family: var(--font-mono);
+}
+
+/* 页脚 */
+.site-footer {
+  border-top: 1px solid var(--border-default);
+  padding: 2.5rem 1.5rem;
+  text-align: center;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  background-color: var(--bg-surface);
+}
+
+.site-footer p {
+  margin-bottom: 0.4rem;
+}

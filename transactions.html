@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quant-FX Research - 事务总览与执行调度</title>
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#161B22">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Quant-FX">
+  <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
+  <link rel="stylesheet" href="assets/css/style.css?v=20261011_v2">
+  <link rel="stylesheet" href="assets/css/components.css?v=20261011_v2">
+  <link rel="stylesheet" href="assets/css/responsive.css?v=20261011_v2">
+</head>
+<body>
+  <!-- 极简毛玻璃顶栏 -->
+  <header class="site-header">
+    <div class="nav-container">
+      <a href="index.html" class="brand-logo">
+        <svg viewBox="0 0 64 64" fill="none">
+          <rect width="64" height="64" rx="14" fill="#161B22"/>
+          <path d="M16 24L32 12L48 24" stroke="#58A6FF" stroke-width="5" stroke-linecap="round"/>
+          <path d="M48 40L32 52L16 40" stroke="#3FB950" stroke-width="5" stroke-linecap="round"/>
+          <circle cx="32" cy="32" r="7" fill="#0D1117" stroke="#BC8CFF" stroke-width="3"/>
+        </svg>
+        Quant-FX <span>RESEARCH</span>
+      </a>
+      <button class="menu-toggle" id="menuToggle" aria-label="展开导航菜单">☰</button>
+      <nav class="nav-links" id="navLinks">
+        <a href="index.html" class="nav-item">平台首页</a>
+        <a href="transactions.html" class="nav-item active">事务总览与调度</a>
+        <a href="base-data-transactions.html" class="nav-item">基础数据事务</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="docs-container">
+    <article class="content-stream">
+      
+      <!-- 页面 Hero -->
+      <section class="article-header">
+        <h1 class="article-title">全系统事务流水与调度规划</h1>
+        <p class="article-subtitle">
+          全周期记录基础数据全量冷启动回补、数据湖去重清洗、5 维质量门禁审查与每日 P0 增量对齐事务。严格监控 Twelve Data API 配额看门狗水位，实现 100% 幂等与可追溯执行。
+        </p>
+        <div class="article-meta">
+          <span>● 事务审计归档 (TRANSACTION REGISTRY)</span>
+          <span>最后同步时间: <span id="lastSynced" class="tabular-numbers">2026-10-11 02:05 UTC</span></span>
+          <span>执行调度器: <span class="badge badge-green">Native PowerShell 5.1</span></span>
+        </div>
+      </section>
+
+      <!-- 配额看门狗水位卡片 -->
+      <section>
+        <h2 class="section-title">🛡️ API 配额看门狗安全水位监控 (Twelve Data)</h2>
+        <p class="section-desc">免费套餐严格限制 800 次/天、8 次/分钟。调度引擎强制内置 7.5 秒安全休眠与 50 次单日软上限缓冲。</p>
+
+        <div class="grid-cards">
+          <div class="card" style="border-top: 3px solid var(--color-bull);">
+            <div class="stat-label">今日剩余安全配额</div>
+            <div class="stat-value tabular-numbers" style="color:var(--color-bull);">731 <span style="font-size:0.9rem; font-weight:400; color:var(--text-muted);">/ 800 次</span></div>
+            <div class="stat-desc">今日累计消耗 69 次 (占 8.6%) · 安全余量 731 次 (远超 50 次门槛)</div>
+          </div>
+          <div class="card" style="border-top: 3px solid var(--color-accent);">
+            <div class="stat-label">令牌桶看门狗节流</div>
+            <div class="stat-value tabular-numbers" style="color:var(--color-accent);">7.5 <span style="font-size:0.9rem; font-weight:400; color:var(--text-muted);">秒/次</span></div>
+            <div class="stat-desc">锁定请求频率 ≤ 8 次/分钟 · 历史运行零 429 Rate-Limit 报错</div>
+          </div>
+          <div class="card" style="border-top: 3px solid var(--color-purple);">
+            <div class="stat-label">单日收盘 P0 增量开销</div>
+            <div class="stat-value tabular-numbers" style="color:var(--color-purple);">12 <span style="font-size:0.9rem; font-weight:400; color:var(--text-muted);">次/天</span></div>
+            <div class="stat-desc">仅需 12 次请求即可同步全市场日K · 仅耗单日 1.5% 配额</div>
+          </div>
+          <div class="card" style="border-top: 3px solid var(--color-gold);">
+            <div class="stat-label">全量冷启动历史开销</div>
+            <div class="stat-value tabular-numbers" style="color:var(--color-gold);">36 <span style="font-size:0.9rem; font-weight:400; color:var(--text-muted);">次已归档</span></div>
+            <div class="stat-desc">单次拉取 5,000 根 · 一键完成 12 标的 3 级时序阶梯全量历史</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 事务日志流水表格 -->
+      <section>
+        <h2 class="section-title">📋 基础数据真实事务历史注册流水表 (Transaction Log)</h2>
+        <div class="table-container">
+          <table class="data-table" id="txTable">
+            <thead>
+              <tr>
+                <th>事务编号</th>
+                <th>分类</th>
+                <th>事务描述与目标</th>
+                <th>耗时</th>
+                <th>配额消耗</th>
+                <th>产出与交付物</th>
+                <th>执行调度器</th>
+                <th>执行结果</th>
+              </tr>
+            </thead>
+            <tbody id="txTableBody">
+              <tr><td colspan="8" style="text-align:center; color:var(--text-muted); padding:2rem;">正在加载事务流水...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- 运维与调度计划清单 -->
+      <section>
+        <h2 class="section-title">⏱️ 生产常态化调度计划 (Daily Cron Schedule)</h2>
+        <div class="grid-cards" style="grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));">
+          <div class="card">
+            <div class="card-title">🌅 【P0】每日外汇日线增量同步 (Daily Roll)</div>
+            <div class="card-desc" style="margin-bottom:0.75rem;">
+              美东时间 17:00（北京时间次日 05:00），外汇交易商完成每日利息（Swap）结算时刻优先触发，无损追加对齐。
+            </div>
+            <div class="code-box">
+powershell.exe -ExecutionPolicy Bypass -File scripts\sync_forex_base_data.ps1 -Mode DailyIncremental -Interval 1day
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-title">🔍 【门禁】每日 5 维数据健康审计 (Audit Gate)</div>
+            <div class="card-desc" style="margin-bottom:0.75rem;">
+              增量同步完成后自动触发，执行时间戳连续性、物理极值与异常跳空审查。
+            </div>
+            <div class="code-box">
+powershell.exe -ExecutionPolicy Bypass -File scripts\audit_base_data.ps1 -Interval All
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-title">🚀 【发布】UI 静态切片同步与 Pages 部署</div>
+            <div class="card-desc" style="margin-bottom:0.75rem;">
+              完成数据审计后自动提取切片并推送到 GitHub Pages 生产展示大盘。
+            </div>
+            <div class="code-box">
+powershell.exe -ExecutionPolicy Bypass -File scripts\export_ui_data.ps1
+powershell.exe -ExecutionPolicy Bypass -File scripts\publish_ui_repo.ps1
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <p>Quant-FX Research Platform · 纯静态只读学术与外汇量化展示大盘</p>
+    <p style="color:var(--text-muted); font-size:0.78rem;">
+      数据源: Twelve Data (Base Data) · 核心算法与数据湖只读不可篡改
+    </p>
+  </footer>
+
+  <script type="module">
+    import { QuantFX } from './assets/js/utils.js';
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      const data = await QuantFX.loadData('transaction_registry.json');
+      if (!data || !data.transactions) return;
+
+      const tbody = document.getElementById('txTableBody');
+      if (!tbody) return;
+
+      tbody.innerHTML = data.transactions.map(tx => {
+        const catBadge = tx.category.includes('P0') ? 'badge-gold' : (tx.category === 'BASE_DATA' ? 'badge-blue' : (tx.category === 'AUDIT_GATE' ? 'badge-green' : 'badge-purple'));
+        return `
+          <tr>
+            <td><strong style="color:var(--text-primary); font-family:var(--font-mono);">${tx.tx_id}</strong></td>
+            <td><span class="badge ${catBadge}">${tx.category}</span></td>
+            <td style="font-weight:600;">${tx.title}</td>
+            <td class="tabular-numbers">${tx.duration_sec}s</td>
+            <td class="tabular-numbers">${tx.requests_consumed} 次</td>
+            <td style="color:var(--color-accent); font-size:0.85rem;">${tx.data_produced}</td>
+            <td><code>${tx.operator}</code></td>
+            <td><span class="badge badge-green">✓ SUCCESS</span></td>
+          </tr>
+        `;
+      }).join('');
+    });
+  </script>
+  <script src="assets/js/pwa.js"></script>
+</body>
+</html>

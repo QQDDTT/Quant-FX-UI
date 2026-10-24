@@ -1,0 +1,28 @@
+﻿{
+    "platform_name":  "Quant-FX",
+    "brand_subtitle":  "全球外汇与贵金属高精量化底座",
+    "version":  "v1.3.0",
+    "engine":  "Windows Native PowerShell \u0026 GCP Hybrid Compute",
+    "status":  "OPERATIONAL",
+    "current_phase":  "PHASE_1_BASE_DATA_LAKE_READY",
+    "phase_description":  "基础数据湖全量冷启动与5维审计已就绪；模型预测与交易事务规划筹备中",
+    "model_status":  "PENDING_DEVELOPMENT",
+    "trading_status":  "PENDING_DEVELOPMENT",
+    "last_synced":  "2026-10-24 00:46 UTC",
+    "base_data_source":  "Twelve Data API (Tier-1 Institutional Free Tier)",
+    "execution_broker":  "OANDA v20 REST API (Standby)",
+    "api_quota":  {
+                      "daily_limit":  800,
+                      "used_today":  66,
+                      "remaining_today":  734,
+                      "rate_limit_per_min":  8,
+                      "watchdog_interval_sec":  7.5,
+                      "safety_buffer":  50
+                  },
+    "stats":  {
+                  "total_symbols":  48,
+                  "total_candles":  2940105,
+                  "health_score":  100,
+                  "time_series_depth":  "18 Years Continuous Day Candles"
+              }
+}

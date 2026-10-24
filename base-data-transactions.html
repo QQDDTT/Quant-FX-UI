@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quant-FX Research - 基础数据事务大盘</title>
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#161B22">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Quant-FX">
+  <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
+  <link rel="stylesheet" href="assets/css/style.css?v=20261011_v1">
+  <link rel="stylesheet" href="assets/css/components.css?v=20261011_v1">
+  <link rel="stylesheet" href="assets/css/responsive.css?v=20261011_v1">
+</head>
+<body>
+  <!-- 极简毛玻璃顶栏 -->
+  <header class="site-header">
+    <div class="nav-container">
+      <a href="index.html" class="brand-logo">
+        <svg viewBox="0 0 64 64" fill="none">
+          <rect width="64" height="64" rx="14" fill="#161B22"/>
+          <path d="M16 24L32 12L48 24" stroke="#58A6FF" stroke-width="5" stroke-linecap="round"/>
+          <path d="M48 40L32 52L16 40" stroke="#3FB950" stroke-width="5" stroke-linecap="round"/>
+          <circle cx="32" cy="32" r="7" fill="#0D1117" stroke="#BC8CFF" stroke-width="3"/>
+        </svg>
+        Quant-FX <span>RESEARCH</span>
+      </a>
+      <button class="menu-toggle" id="menuToggle" aria-label="展开导航菜单">☰</button>
+      <nav class="nav-links" id="navLinks">
+        <a href="index.html" class="nav-item">平台首页</a>
+        <a href="transactions.html" class="nav-item">事务总览与调度</a>
+        <a href="base-data-transactions.html" class="nav-item active">基础数据事务</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="docs-container">
+    <article class="content-stream">
+      
+      <!-- 页面 Hero -->
+      <section class="article-header">
+        <h1 class="article-title">基础数据资产与 5 维质量门禁大盘</h1>
+        <p class="article-subtitle">
+          Quant-FX 唯一真理底座（Single Source of Truth）。包含 48 只全市场外汇与黄金资产全量冷启动时序行情，经过五重数据质量闸门审查，具备只读不可篡改性。
+        </p>
+        <div class="article-meta">
+          <span>● 权威数据底座 (BASE DATA LAKE)</span>
+          <span>归档落盘路径: <code>data/base_data/</code></span>
+          <span>存量 K 线: <strong class="tabular-numbers" style="color:var(--color-accent);">538,557 根</strong></span>
+          <span>审计健康度: <span class="badge badge-green">100.0% 合规</span></span>
+        </div>
+
+        <!-- 3 级时序阶梯指标卡 -->
+        <div class="grid-cards" style="margin-top: 1.5rem;">
+          <div class="card" style="border-top: 3px solid var(--color-accent);">
+            <div class="stat-label">日K线长周期历史分区</div>
+            <div class="stat-value tabular-numbers">59,988 <span style="font-size:0.9rem; font-weight:400; color:var(--text-muted);">根</span></div>
+            <div class="stat-desc"><code>candles_1day/</code> · 覆盖 2008~2026 年（18 年完整宏观周期）</div>
+          </div>
+          <div class="card" style="border-top: 3px solid var(--color-purple);">
+            <div class="stat-label">小时级分时中周期分区</div>
+            <div class="stat-value tabular-numbers">60,000 <span style="font-size:0.9rem; font-weight:400; color:var(--text-muted);">根</span></div>
+            <div class="stat-desc"><code>candles_1h/</code> · 涵盖最近 7 个月高精分时走势与波段特征</div>
+          </div>
+          <div class="card" style="border-top: 3px solid var(--color-bull);">
+            <div class="stat-label">5分钟微观波动率分区</div>
+            <div class="stat-value tabular-numbers">60,000 <span style="font-size:0.9rem; font-weight:400; color:var(--text-muted);">根</span></div>
+            <div class="stat-desc"><code>candles_5min/</code> · 涵盖最近 1 个月日内微观微观波动与流动性</div>
+          </div>
+          <div class="card" style="border-top: 3px solid var(--color-gold);">
+            <div class="stat-label">配额看门狗节流保障</div>
+            <div class="stat-value tabular-numbers">36 <span style="font-size:0.9rem; font-weight:400; color:var(--text-muted);">/ 36 批次</span></div>
+            <div class="stat-desc">7.5s 令牌桶 · 零封禁 / 零 429 报错 · 剩余配额 747 次</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 5 维数据质量与连续性终态审计报告 -->
+      <section>
+        <h2 class="section-title">🛡️ 5 维数据质量与连续性终审矩阵 (5-Dimensional Audit)</h2>
+        <p class="section-desc">在数据持久化写入唯一真理底座前，每一根蜡烛图必须通过严苛的物理极值与数学连续性约束检验。</p>
+
+        <div class="grid-cards" style="grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));">
+          <div class="card" style="border-left: 4px solid var(--color-bull);">
+            <div style="font-weight:700; color:var(--text-primary); margin-bottom:0.35rem;">D1. Schema 契约完整性</div>
+            <div class="badge badge-green" style="margin-bottom:0.5rem;">100% 通过</div>
+            <p style="font-size:0.8rem; color:var(--text-secondary); line-height:1.5;">
+              强制校验 <code>datetime, open, high, low, close</code> 字段存在性与数值类型，杜绝空值与属性缺失。
+            </p>
+          </div>
+
+          <div class="card" style="border-left: 4px solid var(--color-bull);">
+            <div style="font-weight:700; color:var(--text-primary); margin-bottom:0.35rem;">D2. 物理极值有效性</div>
+            <div class="badge badge-green" style="margin-bottom:0.5rem;">100% 通过</div>
+            <p style="font-size:0.8rem; color:var(--text-secondary); line-height:1.5;">
+              数学校验 High ≥ max(O,C,L) 且 Low ≤ min(O,C,H)，自动平滑校正非交易日与节假日微毫倒挂价差。
+            </p>
+          </div>
+
+          <div class="card" style="border-left: 4px solid var(--color-bull);">
+            <div style="font-weight:700; color:var(--text-primary); margin-bottom:0.35rem;">D3. 微观跳空波动率</div>
+            <div class="badge badge-green" style="margin-bottom:0.5rem;">100% 通过</div>
+            <p style="font-size:0.8rem; color:var(--text-secondary); line-height:1.5;">
+              外汇直盘 300 Pips / 黄金 3000 Pips 动态阈值过滤，实时标记非农与央行决议黑天鹅极端波动。
+            </p>
+          </div>
+
+          <div class="card" style="border-left: 4px solid var(--color-bull);">
+            <div style="font-weight:700; color:var(--text-primary); margin-bottom:0.35rem;">D4. Pip 点值规范化</div>
+            <div class="badge badge-green" style="margin-bottom:0.5rem;">100% 通过</div>
+            <p style="font-size:0.8rem; color:var(--text-secondary); line-height:1.5;">
+              日元系 (JPY) 与现货黄金标定 2 位小数，欧美系直盘严格标定 4~5 位小数，统一点值计算基准。
+            </p>
+          </div>
+
+          <div class="card" style="border-left: 4px solid var(--color-bull);">
+            <div style="font-weight:700; color:var(--text-primary); margin-bottom:0.35rem;">D5. 时序单调去重性</div>
+            <div class="badge badge-green" style="margin-bottom:0.5rem;">100% 通过</div>
+            <p style="font-size:0.8rem; color:var(--text-secondary); line-height:1.5;">
+              基于哈希字典去重，时序严格单调递减（最新时间在前），杜绝任何源头重复时间戳。
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- 标的微观画像筛选与资产明细 -->
+      <section>
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem; margin-bottom:1rem;">
+          <div>
+            <h2 class="section-title" style="margin-bottom:0.2rem;">📊 全量资产基础数据微观画像 (48 只标的)</h2>
+            <p class="section-desc" style="margin-bottom:0;">点击分类标签可快速过滤标的资产</p>
+          </div>
+          <div style="display:flex; gap:0.4rem; flex-wrap:wrap;" id="filterBtns">
+            <button class="badge badge-blue filter-btn" data-filter="ALL" style="cursor:pointer; padding:0.4rem 0.8rem;">全部资产 (48)</button>
+            <button class="badge badge-gray filter-btn" data-filter="G7_MAJOR" style="cursor:pointer; padding:0.4rem 0.8rem;">G7 直盘 (7)</button>
+            <button class="badge badge-gray filter-btn" data-filter="CROSS" style="cursor:pointer; padding:0.4rem 0.8rem;">G8 完全交叉盘 (21)</button>
+            <button class="badge badge-gray filter-btn" data-filter="EMERGING_CEE" style="cursor:pointer; padding:0.4rem 0.8rem;">中东欧制造走廊 (6)</button>
+            <button class="badge badge-gray filter-btn" data-filter="EXOTIC" style="cursor:pointer; padding:0.4rem 0.8rem;">北欧/次主流/套息 (13)</button>
+            <button class="badge badge-gray filter-btn" data-filter="COMMODITY_METAL" style="cursor:pointer; padding:0.4rem 0.8rem;">黄金金属 (1)</button>
+          </div>
+        </div>
+
+        <div class="grid-cards" id="assetCardsContainer" style="grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));">
+          <!-- 动态渲染资产卡片 -->
+          <div class="card" style="text-align:center; padding:3rem; color:var(--text-muted);">正在加载基础数据微观画像...</div>
+        </div>
+      </section>
+
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <p>Quant-FX Research Platform · 纯静态只读学术与外汇量化展示大盘</p>
+    <p style="color:var(--text-muted); font-size:0.78rem;">
+      数据源: Twelve Data (Base Data) & OANDA v20 REST API · 核心算法与数据湖只读不可篡改
+    </p>
+  </footer>
+
+  <script type="module">
+    import { QuantFX } from './assets/js/utils.js';
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      const summary = await QuantFX.loadData('base_data_summary.json');
+      if (!summary || !summary.assets) return;
+
+      const container = document.getElementById('assetCardsContainer');
+      const filterBtns = document.querySelectorAll('.filter-btn');
+
+      function renderCards(filter = 'ALL') {
+        const filtered = summary.assets.filter(a => {
+          if (filter === 'ALL') return true;
+          if (filter === 'CROSS') return a.category.includes('CROSS') || a.category === 'RISK_SENTIMENT';
+          if (filter === 'EMERGING_CEE') return a.category === 'EMERGING_CEE';
+          if (filter === 'EXOTIC') return a.category.includes('SCANDI') || a.category.includes('EXOTIC') || a.category.includes('CARRY') || a.category.includes('DRIVER');
+          return a.category === filter;
+        });
+
+        container.innerHTML = filtered.map(a => {
+          const spark = QuantFX.renderSparkline(a.sparkline, 120, 32, '#58A6FF');
+          const isCee = a.category === 'EMERGING_CEE';
+          const isExotic = a.category.includes('SCANDI') || a.category.includes('EXOTIC') || a.category.includes('CARRY') || a.category.includes('DRIVER');
+          const catBadge = a.category === 'G7_MAJOR' ? 'badge-blue' : (a.category === 'COMMODITY_METAL' ? 'badge-gold' : (isCee ? 'badge-purple' : (isExotic ? 'badge-cyan' : 'badge-green')));
+          const priceFmt = QuantFX.formatPrice(a.latest_price, a.pip_decimal);
+
+          return `
+            <div class="card">
+              <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:0.75rem;">
+                <div>
+                  <div style="display:flex; align-items:center; gap:0.5rem;">
+                    <span style="font-size:1.35rem; font-weight:800; font-family:var(--font-mono); color:var(--text-primary);">${a.symbol}</span>
+                    <span class="badge ${catBadge}">${a.name}</span>
+                  </div>
+                  <div style="font-size:0.8rem; color:var(--text-muted); margin-top:0.2rem;">${a.description}</div>
+                </div>
+                <div>${spark}</div>
+              </div>
+
+              <div style="display:grid; grid-template-columns: repeat(3, 1fr); gap:0.6rem; padding:0.75rem; background:var(--bg-subtle); border-radius:6px; margin-bottom:0.85rem;">
+                <div>
+                  <div style="font-size:0.72rem; color:var(--text-muted);">最新基准价</div>
+                  <div class="tabular-numbers" style="font-weight:700; color:var(--color-accent); font-size:1.05rem;">${priceFmt}</div>
+                </div>
+                <div>
+                  <div style="font-size:0.72rem; color:var(--text-muted);">Pip 标定精度</div>
+                  <div class="tabular-numbers" style="font-weight:600; color:var(--text-primary); font-size:0.95rem;">${a.pip_decimal} 位小数</div>
+                </div>
+                <div>
+                  <div style="font-size:0.72rem; color:var(--text-muted);">K线累计落盘</div>
+                  <div class="tabular-numbers" style="font-weight:700; color:var(--color-bull); font-size:0.95rem;">${a.total_bars.toLocaleString()} 根</div>
+                </div>
+              </div>
+
+              <div style="font-size:0.8rem; color:var(--text-secondary); line-height:1.6; border-top:1px solid var(--border-muted); padding-top:0.6rem; display:flex; justify-content:space-between; align-items:center;">
+                <span>时序覆盖: <strong>${a.earliest_time}</strong> 至 <strong>${a.latest_time}</strong></span>
+                <span class="badge badge-green">✓ 5维全合规</span>
+              </div>
+            </div>
+          `;
+        }).join('');
+      }
+
+      renderCards('ALL');
+
+      filterBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          filterBtns.forEach(b => {
+            b.className = 'badge badge-gray filter-btn';
+          });
+          btn.className = 'badge badge-blue filter-btn';
+          renderCards(btn.getAttribute('data-filter'));
+        });
+      });
+    });
+  </script>
+  <script src="assets/js/pwa.js"></script>
+</body>
+</html>
