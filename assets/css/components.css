@@ -1,0 +1,425 @@
+/* ==============================================================================
+   Quant-FX Research - 核心 UI 组件库 (components.css)
+   支持卡片、数据表、指标徽章、外汇强弱雷达图与风控仪表盘
+   ============================================================================== */
+
+/* 卡片系统 */
+.card {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-default);
+  border-radius: 10px;
+  padding: 1.4rem;
+  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.card:hover {
+  border-color: rgba(88, 166, 255, 0.4);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.28);
+}
+
+.card-title {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.card-desc {
+  font-size: 0.88rem;
+  color: var(--text-secondary);
+  line-height: 1.55;
+}
+
+/* 卡片网格布局 */
+.grid-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.25rem;
+}
+
+.grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+
+.grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+}
+
+/* 核心高光数据卡片 */
+.stat-card {
+  padding: 1.2rem;
+  border-radius: 8px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-default);
+}
+
+.stat-label {
+  font-size: 0.78rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  letter-spacing: 0.5px;
+  margin-bottom: 0.35rem;
+}
+
+.stat-value {
+  font-size: 1.75rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  line-height: 1.15;
+  margin-bottom: 0.35rem;
+}
+
+.stat-desc {
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+}
+
+/* 徽章 Badge */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.2rem 0.55rem;
+  border-radius: 4px;
+  white-space: nowrap;
+}
+
+.badge-green {
+  background: rgba(63, 185, 80, 0.15);
+  color: var(--color-bull);
+  border: 1px solid rgba(63, 185, 80, 0.35);
+}
+
+.badge-red {
+  background: rgba(248, 81, 73, 0.15);
+  color: var(--color-bear);
+  border: 1px solid rgba(248, 81, 73, 0.35);
+}
+
+.badge-blue {
+  background: rgba(88, 166, 255, 0.15);
+  color: var(--color-accent);
+  border: 1px solid rgba(88, 166, 255, 0.35);
+}
+
+.badge-gold {
+  background: rgba(210, 153, 34, 0.15);
+  color: var(--color-gold);
+  border: 1px solid rgba(210, 153, 34, 0.35);
+}
+
+.badge-purple {
+  background: rgba(188, 140, 255, 0.15);
+  color: var(--color-purple);
+  border: 1px solid rgba(188, 140, 255, 0.35);
+}
+
+.badge-gray {
+  background: rgba(110, 118, 129, 0.15);
+  color: var(--text-secondary);
+  border: 1px solid var(--border-default);
+}
+
+/* 状态指示点 */
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: inline-block;
+  background: var(--text-muted);
+}
+
+.status-dot.active {
+  background: var(--color-bull);
+  box-shadow: 0 0 8px rgba(63, 185, 80, 0.6);
+}
+
+.status-dot.warning {
+  background: var(--color-gold);
+  box-shadow: 0 0 8px rgba(210, 153, 34, 0.6);
+}
+
+/* 表格容器与数据表格 */
+.table-container {
+  width: 100%;
+  overflow-x: auto;
+  border: 1px solid var(--border-default);
+  border-radius: 8px;
+  background-color: var(--bg-surface);
+}
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.88rem;
+  text-align: left;
+}
+
+.data-table th {
+  background-color: var(--bg-subtle);
+  color: var(--text-secondary);
+  font-weight: 600;
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid var(--border-default);
+  white-space: nowrap;
+}
+
+.data-table td {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid var(--border-muted);
+  color: var(--text-primary);
+}
+
+.data-table tr:last-child td {
+  border-bottom: none;
+}
+
+.data-table tr:hover td {
+  background-color: rgba(255, 255, 255, 0.02);
+}
+
+/* 提示与注意框 Callouts */
+.callout {
+  padding: 1.1rem 1.3rem;
+  border-radius: 8px;
+  background-color: var(--bg-subtle);
+  border-left: 4px solid var(--color-accent);
+  font-size: 0.92rem;
+  line-height: 1.6;
+  color: var(--text-secondary);
+}
+
+.callout strong {
+  color: var(--text-primary);
+}
+
+.callout-success {
+  border-left-color: var(--color-bull);
+  background-color: rgba(63, 185, 80, 0.06);
+}
+
+.callout-warning {
+  border-left-color: var(--color-gold);
+  background-color: rgba(210, 153, 34, 0.06);
+}
+
+.callout-danger {
+  border-left-color: var(--color-bear);
+  background-color: rgba(248, 81, 73, 0.06);
+}
+
+/* 外汇货币强弱动量条 */
+.strength-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 0.85rem;
+}
+
+.strength-label {
+  width: 60px;
+  font-weight: 700;
+  font-family: var(--font-mono);
+  font-size: 0.95rem;
+}
+
+.strength-bar-bg {
+  flex: 1;
+  height: 10px;
+  background-color: var(--bg-subtle);
+  border-radius: 5px;
+  overflow: hidden;
+  border: 1px solid var(--border-muted);
+}
+
+.strength-bar-fill {
+  height: 100%;
+  border-radius: 5px;
+  transition: width 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.strength-val {
+  width: 50px;
+  text-align: right;
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+
+/* Sparkline 迷你走势线 */
+.sparkline-svg {
+  width: 100px;
+  height: 30px;
+  overflow: visible;
+}
+
+.sparkline-path {
+  fill: none;
+  stroke: var(--color-accent);
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* 代码与命令行高亮块 */
+pre, code {
+  font-family: var(--font-mono);
+}
+
+.code-box {
+  background-color: #07090D;
+  border: 1px solid var(--border-default);
+  border-radius: 6px;
+  padding: 0.85rem 1.1rem;
+  color: #7EE787;
+  font-size: 0.82rem;
+  overflow-x: auto;
+  line-height: 1.5;
+}
+
+/* Section 标题 */
+.section-title {
+  font-size: 1.45rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 0.6rem;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.section-desc {
+  font-size: 0.92rem;
+  color: var(--text-secondary);
+  margin-bottom: 1.25rem;
+}
+
+/* ==========================================================================
+   PWA (Progressive Web App) 专属组件与交互样式
+   ========================================================================== */
+
+/* PWA 沉浸式安装应用按钮 */
+.pwa-install-btn {
+  display: none;
+  align-items: center;
+  gap: 0.4rem;
+  background: linear-gradient(135deg, rgba(88, 166, 255, 0.18), rgba(188, 140, 255, 0.18));
+  border: 1px solid rgba(88, 166, 255, 0.4);
+  color: #58A6FF;
+  padding: 0.35rem 0.85rem;
+  border-radius: 20px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  backdrop-filter: blur(8px);
+  margin-left: 0.5rem;
+}
+
+.pwa-install-btn:hover {
+  background: linear-gradient(135deg, rgba(88, 166, 255, 0.3), rgba(188, 140, 255, 0.3));
+  border-color: #58A6FF;
+  color: #FFFFFF;
+  box-shadow: 0 0 12px rgba(88, 166, 255, 0.35);
+  transform: translateY(-1px);
+}
+
+.pwa-install-btn:active {
+  transform: translateY(0);
+}
+
+/* 顶部网络离线/在线状态通知条 */
+.pwa-network-banner {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  padding: 0.45rem 1rem;
+  font-size: 0.84rem;
+  font-weight: 500;
+  text-align: center;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  backdrop-filter: blur(12px);
+  animation: slideDown 0.3s ease-out;
+}
+
+.pwa-network-banner.offline {
+  background-color: rgba(210, 153, 34, 0.2);
+  border-bottom: 1px solid rgba(210, 153, 34, 0.4);
+  color: #E3B341;
+}
+
+.pwa-network-banner.online {
+  background-color: rgba(63, 185, 80, 0.2);
+  border-bottom: 1px solid rgba(63, 185, 80, 0.4);
+  color: #3FB950;
+}
+
+.pwa-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.pwa-dot.offline {
+  background-color: #D29922;
+  box-shadow: 0 0 8px #D29922;
+}
+
+.pwa-dot.online {
+  background-color: #3FB950;
+  box-shadow: 0 0 8px #3FB950;
+}
+
+/* 浮动轻提示 Toast */
+.pwa-toast {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  background-color: rgba(22, 27, 34, 0.95);
+  border: 1px solid var(--border-default);
+  color: var(--text-primary);
+  padding: 0.75rem 1.25rem;
+  border-radius: 8px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(12px);
+  font-size: 0.88rem;
+  z-index: 2000;
+  opacity: 0;
+  transform: translateY(12px);
+  pointer-events: none;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.pwa-toast.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@keyframes slideDown {
+  from { transform: translateY(-100%); }
+  to { transform: translateY(0); }
+}
+
+/* PWA 独立窗口 (Standalone) 体验优化 */
+@media (display-mode: standalone) {
+  .site-header {
+    padding-top: env(safe-area-inset-top, 0);
+  }
+}
+

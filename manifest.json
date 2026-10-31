@@ -1,0 +1,88 @@
+{
+  "id": "quant-fx-research-pwa",
+  "name": "Quant-FX Research - 全球外汇量化系统",
+  "short_name": "Quant-FX",
+  "description": "全球外汇与现货黄金高精基础数据湖、宏观强弱雷达与量化研究系统",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "display_override": [
+    "window-controls-overlay",
+    "standalone",
+    "minimal-ui"
+  ],
+  "background_color": "#0D1117",
+  "theme_color": "#161B22",
+  "orientation": "any",
+  "lang": "zh-CN",
+  "dir": "ltr",
+  "categories": [
+    "finance",
+    "business",
+    "utilities"
+  ],
+  "icons": [
+    {
+      "src": "assets/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "assets/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "assets/icons/icon-maskable.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "assets/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "平台首页",
+      "short_name": "首页",
+      "description": "查看数据湖概况与多空强弱指标",
+      "url": "./index.html",
+      "icons": [
+        {
+          "src": "assets/icons/icon-192.png",
+          "sizes": "192x192"
+        }
+      ]
+    },
+    {
+      "name": "事务总览与调度",
+      "short_name": "事务调度",
+      "description": "查看 Quant-FX 全系统流水与调度状态",
+      "url": "./transactions.html",
+      "icons": [
+        {
+          "src": "assets/icons/icon-192.png",
+          "sizes": "192x192"
+        }
+      ]
+    },
+    {
+      "name": "基础数据事务",
+      "short_name": "数据大盘",
+      "description": "查看 48 只标的 5 维数据质量终审门禁",
+      "url": "./base-data-transactions.html",
+      "icons": [
+        {
+          "src": "assets/icons/icon-192.png",
+          "sizes": "192x192"
+        }
+      ]
+    }
+  ]
+}
