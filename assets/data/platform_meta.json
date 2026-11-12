@@ -1,0 +1,28 @@
+{
+    "platform_name":  "Quant-FX",
+    "brand_subtitle":  "全球外汇与贵金属日内短周期高精量化底座",
+    "version":  "v4.2.0-PROD",
+    "engine":  "Windows Native PowerShell \u0026 GCP Spot Hybrid Compute",
+    "status":  "OPERATIONAL",
+    "current_phase":  "PHASE_3_SANDBOX_ACTIVE",
+    "phase_description":  "48标的144分区基础数据湖与5维审计100%就绪；5套LGBM短周期专家模型(5min-\u003e30min)与OANDA v20虚拟沙盘交易全线投产",
+    "model_status":  "5 MODELS REGISTERED (5 HEALTHY)",
+    "trading_status":  "OANDA SANDBOX #20261113 (NAV $99,954.95)",
+    "last_synced":  "2026-11-13 00:18 UTC",
+    "base_data_source":  "Twelve Data API (Tier-1 Institutional Free Tier)",
+    "execution_broker":  "OANDA v20 REST API (Practice Sandbox #101-001-****9777-001)",
+    "api_quota":  {
+                      "daily_limit":  800,
+                      "used_today":  103,
+                      "remaining_today":  697,
+                      "rate_limit_per_min":  8,
+                      "watchdog_interval_sec":  7.5,
+                      "safety_buffer":  50
+                  },
+    "stats":  {
+                  "total_symbols":  48,
+                  "total_candles":  8215882,
+                  "health_score":  100,
+                  "time_series_depth":  "18 Years Continuous Day Candles + Multi-Year 1h/5min"
+              }
+}

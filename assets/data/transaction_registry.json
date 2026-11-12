@@ -1,0 +1,105 @@
+{
+    "updated_at":  "2026-11-13 00:18 UTC",
+    "transactions":  [
+                         {
+                             "tx_id":  "TX-20261113-001",
+                             "category":  "SANDBOX_TRADING",
+                             "title":  "OANDA v20 虚拟沙盘账户 (#101-001-****9777-001) 60 分钟高频扫描 (61 轮 × 7 只 G7 直盘) 实时交易会话",
+                             "status":  "SUCCESS",
+                             "duration_sec":  3603,
+                             "requests_consumed":  122,
+                             "data_produced":  "完成 427 次多窗口预测与风控过滤 (空仓拦截率 95.55%)，执行 4 笔原子括号单 (2胜2负，胜率 50.0%，净值 $99,954.95，净损益 -$0.84)",
+                             "operator":  "virtual_trade_session.ps1"
+                         },
+                         {
+                             "tx_id":  "TX-20261106-001",
+                             "category":  "P0_DAILY_INCREMENTAL",
+                             "title":  "全市场 48 只资产 P0 日线增量同步与 P1 剩余配额 5min 历史深潜回补事务",
+                             "status":  "SUCCESS",
+                             "duration_sec":  540,
+                             "requests_consumed":  62,
+                             "data_produced":  "48 标的 1day 同步至最新交易日并深潜 5min 历史，全库总存量跃升至 8,215,882 根 (5min 达 5,860,465 根)",
+                             "operator":  "sync_forex_base_data.ps1 \u0026 harvest_remaining_quota_loop.ps1"
+                         },
+                         {
+                             "tx_id":  "TX-20261105-002",
+                             "category":  "MODEL_TRAINING",
+                             "title":  "GCP Spot (e2-standard-4) 全分群 5 套专家模型 (Tier 1 宏观 + Tier 2 四大簇 5min-\u003e30min) 完整训练与归档",
+                             "status":  "SUCCESS",
+                             "duration_sec":  420,
+                             "requests_consumed":  0,
+                             "data_produced":  "基于 333 万根 5min K 线完成 33 维特征构建与 5-Fold 净化训练 (Mean Rank IC: 0.0520 ~ 0.1053, ICIR: 1.83 ~ 10.38)",
+                             "operator":  "gcp_dispatch_train.ps1 \u0026 startup_train_job.sh"
+                         },
+                         {
+                             "tx_id":  "TX-20261105-001",
+                             "category":  "SANDBOX_TRADING",
+                             "title":  "OANDA v20 虚拟账户 60 分钟 (12 轮 × 7 只 G7 直盘) 实时预测与沙盘交易会话",
+                             "status":  "SUCCESS",
+                             "duration_sec":  3600,
+                             "requests_consumed":  96,
+                             "data_produced":  "完成 84 次多窗口评估 (5min 到期方向准确率 57.50%，盈亏拦截准确率 84.52%) 并输出全量复盘报表",
+                             "operator":  "virtual_trade_session.ps1"
+                         },
+                         {
+                             "tx_id":  "TX-20261104-002",
+                             "category":  "SANDBOX_TRADING",
+                             "title":  "OANDA v20 虚拟沙盘账户 (#101-001-****9777-001) 连通与 /virtual_trade_transaction 工作流投产",
+                             "status":  "SUCCESS",
+                             "duration_sec":  15,
+                             "requests_consumed":  8,
+                             "data_produced":  "实现 5min~30min 多窗口盈亏预判、原子止盈止损挂单与盘后盈利/预测准确率复盘报表",
+                             "operator":  "virtual_trade_session.ps1"
+                         },
+                         {
+                             "tx_id":  "TX-20261104-001",
+                             "category":  "P0_DAILY_INCREMENTAL",
+                             "title":  "全市场 48 只资产 1day/1h/5min 增量同步与 Generic.List 线性加速 5min 历史纵深收割",
+                             "status":  "SUCCESS",
+                             "duration_sec":  2100,
+                             "requests_consumed":  240,
+                             "data_produced":  "48 只资产全量对齐至 2026-11-04，总存量跃升至 8,215,882 根 K 线",
+                             "operator":  "sync_forex_base_data.ps1"
+                         },
+                         {
+                             "tx_id":  "TX-20261102-001",
+                             "category":  "P0_DAILY_INCREMENTAL",
+                             "title":  "全市场 48 只资产 1day/1h/5min 增量同步与多轮 5min 历史纵深深潜收割",
+                             "status":  "SUCCESS",
+                             "duration_sec":  3600,
+                             "requests_consumed":  240,
+                             "data_produced":  "48 只资产全量对齐至 2026-11-03，总存量跃升至 5,198,754 根 K 线",
+                             "operator":  "sync_forex_base_data.ps1"
+                         },
+                         {
+                             "tx_id":  "TX-20261031-001",
+                             "category":  "P0_DAILY_INCREMENTAL",
+                             "title":  "全市场 48 只资产 1day/1h/5min 增量同步与 5min 历史纵深收割",
+                             "status":  "SUCCESS",
+                             "duration_sec":  3715,
+                             "requests_consumed":  384,
+                             "data_produced":  "48 只资产全量对齐至 2026-10-31，总存量跃升至 4,701,923 根 K 线",
+                             "operator":  "sync_forex_base_data.ps1"
+                         },
+                         {
+                             "tx_id":  "TX-20261030-002",
+                             "category":  "MODEL_AUDIT",
+                             "title":  "v4.0 日内短周期策略重构、三轮 Momus 对抗审计与 Chaos-Matrix 训练规划封板",
+                             "status":  "SUCCESS",
+                             "duration_sec":  480,
+                             "requests_consumed":  0,
+                             "data_produced":  "32维因果特征算子、G8纯净解耦、单向Purged CV与四阶段训练计划100%闭环",
+                             "operator":  "momus-audit \u0026 chaos-matrix"
+                         },
+                         {
+                             "tx_id":  "TX-20261018-003",
+                             "category":  "AUDIT_GATE",
+                             "title":  "数据湖全量 144 份时序底座 5 维质量门禁全面终审",
+                             "status":  "SUCCESS",
+                             "duration_sec":  225,
+                             "requests_consumed":  0,
+                             "data_produced":  "100.0% 合规健康度 (144/144 多周期资产满分通过)",
+                             "operator":  "audit_base_data.ps1"
+                         }
+                     ]
+}

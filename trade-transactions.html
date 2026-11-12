@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quant-FX Research - 交易事务与模拟沙盘大盘</title>
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#161B22">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Quant-FX">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self' https://cloudflareinsights.com;">
+  <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
+  <link rel="stylesheet" href="assets/css/style.css?v=20261113_v5">
+  <link rel="stylesheet" href="assets/css/components.css?v=20261113_v5">
+  <link rel="stylesheet" href="assets/css/responsive.css?v=20261113_v5">
+</head>
+<body>
+  <!-- 极简毛玻璃顶栏 -->
+  <header class="site-header">
+    <div class="nav-container">
+      <a href="index.html" class="brand-logo">
+        <svg viewBox="0 0 64 64" fill="none">
+          <rect width="64" height="64" rx="14" fill="#161B22"/>
+          <path d="M16 24L32 12L48 24" stroke="#58A6FF" stroke-width="5" stroke-linecap="round"/>
+          <path d="M48 40L32 52L16 40" stroke="#3FB950" stroke-width="5" stroke-linecap="round"/>
+          <circle cx="32" cy="32" r="7" fill="#0D1117" stroke="#BC8CFF" stroke-width="3"/>
+        </svg>
+        Quant-FX <span>RESEARCH</span>
+      </a>
+      <button class="menu-toggle" id="menuToggle" aria-label="展开导航菜单">☰</button>
+      <nav class="nav-links" id="navLinks">
+        <a href="index.html" class="nav-item">平台首页</a>
+        <a href="transactions.html" class="nav-item">事务总览与调度</a>
+        <a href="base-data-transactions.html" class="nav-item">基础数据事务</a>
+        <a href="model-transactions.html" class="nav-item">模型事务专栏</a>
+        <a href="trade-transactions.html" class="nav-item active">交易事务</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="docs-container">
+    <article class="content-stream">
+
+      <!-- 页面 Hero：最近模拟沙盘实时战况总览 -->
+      <section class="article-header">
+        <h1 class="article-title">交易事务：OANDA v20 虚拟账户模拟沙盘监控大盘</h1>
+        <p class="article-subtitle">
+          全景复盘最近一场 OANDA v20 Practice 虚拟沙盘高频交易会话的账户净值轨迹、原子止盈止损括号单（Atomic Bracket Orders）成交明细、7 只 G7 主流直盘微观摩擦表现，以及 5min / 15min / 30min 多窗口预测对账流水。
+        </p>
+        <div class="article-meta">
+          <span>● 最近沙盘会话: <strong id="metaSessionId" class="tabular-numbers" style="color:var(--color-accent);">#20261113_001753</strong></span>
+          <span>脱敏沙盘账户: <code id="metaAccountId">101-001-****9777-001</code></span>
+          <span>执行时间窗: <span id="metaTimeWindow" class="tabular-numbers">2026-11-12 23:17:51 ~ 2026-11-13 00:17:54</span></span>
+          <span>驱动模型: <code id="metaModelEngine">LGBM_ALPHA_CLUSTER_MAJOR_TREND_V1</code></span>
+          <span>期末敞口: <span class="badge badge-green">0 笔留仓 (100% CLOSED)</span></span>
+        </div>
+
+        <!-- 4 大核心沙盘战况指标卡 -->
+        <div class="grid-cards" style="margin-top: 1.5rem;">
+          <div class="card" style="border-top: 3px solid var(--color-accent);">
+            <div class="stat-label">期末沙盘账户净值 (Final NAV)</div>
+            <div class="stat-value tabular-numbers" id="kpiFinalNav" style="color:var(--color-accent);">$99,954.95 <span style="font-size:0.88rem; font-weight:400; color:var(--text-muted);">USD</span></div>
+            <div class="stat-desc" id="kpiNavDesc">期初净值 $99,955.79 · 会话净值波动仅 -0.0008%</div>
+          </div>
+
+          <div class="card" style="border-top: 3px solid var(--color-gold);">
+            <div class="stat-label">本场净损益与盈亏比 (Net PnL)</div>
+            <div class="stat-value tabular-numbers" id="kpiNetPnl" style="color:var(--color-gold);">-$0.84 <span style="font-size:0.88rem; font-weight:400; color:var(--text-muted);">/ -1.20 Pips</span></div>
+            <div class="stat-desc" id="kpiPfDesc">总毛利 +$20.78 / 总毛亏 -$21.62 · 盈亏比 (PF) 0.96</div>
+          </div>
+
+          <div class="card" style="border-top: 3px solid var(--color-bull);">
+            <div class="stat-label">实际成交括号单与胜率</div>
+            <div class="stat-value tabular-numbers" id="kpiTradeStats" style="color:var(--color-bull);">4 笔 <span style="font-size:0.88rem; font-weight:400; color:var(--text-muted);">胜率 50.0%</span></div>
+            <div class="stat-desc" id="kpiTradeDesc">2 笔触及 TP 止盈 / 2 笔触及 SL 原子止损保护 · 单笔 10,000 units</div>
+          </div>
+
+          <div class="card" style="border-top: 3px solid var(--color-purple);">
+            <div class="stat-label">事前点差与微观空仓拦截率</div>
+            <div class="stat-value tabular-numbers" id="kpiFilterRate" style="color:var(--color-purple);">95.55% <span style="font-size:0.88rem; font-weight:400; color:var(--text-muted);">防御率</span></div>
+            <div class="stat-desc" id="kpiFilterDesc">61 轮共 427 次实时扫描 · 仅放行净边际 ≥ 1.8 Pips 高赔率信号</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 黄金比例主从双舞台：左 1.618fr 净值轨迹与配置 | 右 1fr 多窗口准确率与四道风控门禁 -->
+      <section>
+        <div class="sandbox-split-stage">
+
+          <!-- 左舞台：账户净值演进曲线与会话配置 -->
+          <div class="card" style="display:flex; flex-direction:column; justify-content:space-between; gap:1rem;">
+            <div>
+              <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:0.5rem; margin-bottom:0.75rem;">
+                <div>
+                  <h2 class="section-title" style="font-size:1.18rem; margin-bottom:0.2rem;">📈 模拟沙盘账户净值（NAV）与已实现损益演进轨迹</h2>
+                  <p style="font-size:0.82rem; color:var(--text-secondary); margin:0;">
+                    追踪 61 轮高频巡检期间 4 笔原子括号订单从入场、浮盈扩张、止盈落袋到止损截断的账户净值闭环曲线
+                  </p>
+                </div>
+                <span class="badge badge-cyan" id="navPeakBadge">盘中峰值 $99,964.34 (+$8.55)</span>
+              </div>
+
+              <!-- 响应式 SVG 净值曲线画布 -->
+              <div id="navChartContainer" style="width:100%; background:var(--bg-canvas); border:1px solid var(--border-muted); border-radius:8px; padding:0.85rem;">
+                <div style="text-align:center; padding:2.5rem; color:var(--text-muted);">正在绘制沙盘净值轨迹...</div>
+              </div>
+            </div>
+
+            <!-- 会话关键节点流水条与执行参数 -->
+            <div>
+              <div style="font-size:0.8rem; font-weight:700; color:var(--text-primary); margin-bottom:0.5rem;">⚙️ 本场模拟沙盘执行参数契约 (Session Execution Spec)</div>
+              <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(145px, 1fr)); gap:0.55rem;">
+                <div style="background:var(--bg-subtle); padding:0.55rem 0.7rem; border-radius:6px;">
+                  <div class="kv-mini-label">轮询周期与总轮次</div>
+                  <div class="kv-mini-val" id="specCycles">60m · 1m/轮 (61轮)</div>
+                </div>
+                <div style="background:var(--bg-subtle); padding:0.55rem 0.7rem; border-radius:6px;">
+                  <div class="kv-mini-label">扫描标的矩阵</div>
+                  <div class="kv-mini-val" id="specUniverse">7 只 G7 美元直盘</div>
+                </div>
+                <div style="background:var(--bg-subtle); padding:0.55rem 0.7rem; border-radius:6px;">
+                  <div class="kv-mini-label">单笔头寸与净边际门槛</div>
+                  <div class="kv-mini-val" id="specEdge">10,000u · ≥1.80p</div>
+                </div>
+                <div style="background:var(--bg-subtle); padding:0.55rem 0.7rem; border-radius:6px;">
+                  <div class="kv-mini-label">推理引擎规格</div>
+                  <div class="kv-mini-val" id="specTree">339 棵树 · &lt;30ms</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 右舞台：多窗口预测准确率 + 四道事前事中风控防线 -->
+          <div style="display:flex; flex-direction:column; gap:1.15rem;">
+
+            <!-- 多窗口到期方向准确率 -->
+            <div class="card">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.65rem;">
+                <span class="card-title" style="margin-bottom:0;">🎯 多窗口到期方向预测审计</span>
+                <span class="badge badge-blue">5m → 15m → 30m</span>
+              </div>
+              <p style="font-size:0.79rem; color:var(--text-secondary); margin-bottom:0.8rem;">
+                预测方向命中率随时间跨度向 <code>30min</code> 主训练目标窗口收敛而单调抬升，印证短周期微观噪音平滑效应：
+              </p>
+              <div id="accuracyBarsContainer">
+                <!-- JS 动态渲染 scaleX 比例条 -->
+              </div>
+            </div>
+
+            <!-- 四道资金与风控防线实时体检 -->
+            <div class="card">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.65rem;">
+                <span class="card-title" style="margin-bottom:0;">🛡️ 沙盘四道资金安全防线状态</span>
+                <span class="badge badge-green">4/4 ACTIVE</span>
+              </div>
+              <div id="riskGuardsContainer" style="display:flex; flex-direction:column; gap:0.55rem;">
+                <!-- JS 动态渲染 RG-1 ~ RG-4 -->
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      <!-- 7 只 G7 主流直盘分标的沙盘微观表现卡片 -->
+      <section>
+        <div class="section-header-row">
+          <div>
+            <h2 class="section-title" style="margin-bottom:0.2rem;">💱 7 只 G7 主流直盘分标的沙盘微观战况 (Per-Symbol Sandbox Breakdown)</h2>
+            <p class="section-desc" style="margin-bottom:0;">按本场已实现净盈亏排序，展示各直盘 60 分钟日内 Mid 走势微图、实时平均点差、5min ATR 波动率与风控拦截效果</p>
+          </div>
+        </div>
+
+        <div class="grid-cards" id="symbolBreakdownGrid" style="grid-template-columns: repeat(auto-fit, minmax(265px, 1fr));">
+          <div class="card" style="text-align:center; padding:2rem; color:var(--text-muted);">正在加载 7 只直盘微观表现...</div>
+        </div>
+      </section>
+
+      <!-- 沙盘实际成交原子括号订单明细表 -->
+      <section>
+        <div class="section-header-row">
+          <div>
+            <h2 class="section-title" style="margin-bottom:0.2rem;">🧾 沙盘成交原子括号单明细表 (Executed Atomic Bracket Orders)</h2>
+            <p class="section-desc" style="margin-bottom:0;">全部订单在发单瞬间 100% 原子绑定服务端止损（StopLossOnFill）与止盈（TakeProfitOnFill），杜绝裸敞口暴露</p>
+          </div>
+        </div>
+
+        <div class="table-container">
+          <table class="data-table" id="executedTradesTable">
+            <thead>
+              <tr>
+                <th>开仓轮次 / 时间</th>
+                <th>交易标的</th>
+                <th>方向 / 数量</th>
+                <th>入场成交价</th>
+                <th>实时点差</th>
+                <th>原子止损 (SL) / 止盈 (TP)</th>
+                <th>模型预测 (5m/15m/30m)</th>
+                <th>平仓结算价 / 触发机制</th>
+                <th>实际净点数</th>
+                <th>实际净盈亏 (USD)</th>
+                <th>订单状态</th>
+              </tr>
+            </thead>
+            <tbody id="executedTradesTableBody">
+              <tr><td colspan="11" style="text-align:center; color:var(--text-muted); padding:2rem;">正在加载沙盘成交订单...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- 逐轮多窗口预测与真实走势对账舱 -->
+      <section>
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem; margin-bottom:0.9rem;">
+          <div>
+            <h2 class="section-title" style="margin-bottom:0.2rem;">🔬 逐轮 5min~30min 预测与盘口真实走势对账舱 (Prediction vs. Actual Vault)</h2>
+            <p class="section-desc" style="margin-bottom:0;">抽样展示沙盘关键信号轮次、开仓持仓轮次及首尾锚点轮次的盘口点差、多窗口预测点数与到期真实变动对账</p>
+          </div>
+          <div style="display:flex; gap:0.45rem; flex-wrap:wrap;" id="auditModeBtns">
+            <button class="badge badge-blue audit-mode-btn" data-mode="ALL" style="cursor:pointer; min-height:44px; padding:0.45rem 0.85rem;">全部关键对账</button>
+            <button class="badge badge-gray audit-mode-btn" data-mode="OPEN_ONLY" style="cursor:pointer; min-height:44px; padding:0.45rem 0.85rem;">仅开仓与持仓动作</button>
+            <button class="badge badge-gray audit-mode-btn" data-mode="SIGNAL_ONLY" style="cursor:pointer; min-height:44px; padding:0.45rem 0.85rem;">多空方向预测 (HIT/MISS)</button>
+          </div>
+        </div>
+
+        <div style="display:flex; gap:0.4rem; flex-wrap:wrap; margin-bottom:0.85rem;" id="auditSymbolBtns">
+          <button class="badge badge-cyan sym-filter-btn" data-sym="ALL" style="cursor:pointer; min-height:44px; padding:0.4rem 0.75rem;">全部标的 (7)</button>
+          <button class="badge badge-gray sym-filter-btn" data-sym="USD_CHF" style="cursor:pointer; min-height:44px; padding:0.4rem 0.75rem;">USD_CHF</button>
+          <button class="badge badge-gray sym-filter-btn" data-sym="USD_JPY" style="cursor:pointer; min-height:44px; padding:0.4rem 0.75rem;">USD_JPY</button>
+          <button class="badge badge-gray sym-filter-btn" data-sym="EUR_USD" style="cursor:pointer; min-height:44px; padding:0.4rem 0.75rem;">EUR_USD</button>
+          <button class="badge badge-gray sym-filter-btn" data-sym="USD_CAD" style="cursor:pointer; min-height:44px; padding:0.4rem 0.75rem;">USD_CAD</button>
+          <button class="badge badge-gray sym-filter-btn" data-sym="GBP_USD" style="cursor:pointer; min-height:44px; padding:0.4rem 0.75rem;">GBP_USD</button>
+          <button class="badge badge-gray sym-filter-btn" data-sym="AUD_USD" style="cursor:pointer; min-height:44px; padding:0.4rem 0.75rem;">AUD_USD</button>
+          <button class="badge badge-gray sym-filter-btn" data-sym="NZD_USD" style="cursor:pointer; min-height:44px; padding:0.4rem 0.75rem;">NZD_USD</button>
+        </div>
+
+        <div class="scroll-vault-y">
+          <table class="data-table sticky-table" id="auditVaultTable">
+            <thead>
+              <tr>
+                <th>轮次</th>
+                <th>扫描时间</th>
+                <th>标的</th>
+                <th>入场盘口 Mid</th>
+                <th>实时点差</th>
+                <th>预测方向</th>
+                <th>预测 5m / 15m / 30m</th>
+                <th>扣费预计净收益</th>
+                <th>真实走势变动</th>
+                <th>方向判定</th>
+                <th>风控与执行动作</th>
+              </tr>
+            </thead>
+            <tbody id="auditVaultTableBody">
+              <tr><td colspan="11" style="text-align:center; color:var(--text-muted); padding:2rem;">正在加载逐轮预测对账记录...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- 近期模拟沙盘历史会话台账 -->
+      <section>
+        <h2 class="section-title">🗂️ 近期模拟沙盘历史验证台账 (Recent Sandbox Sessions Ledger)</h2>
+        <p class="section-desc">记录 Quant-FX 接入 OANDA v20 Practice 虚拟沙盘以来的历次代表性验证场次与核心结论：</p>
+        <div class="table-container">
+          <table class="data-table" id="sessionHistoryTable">
+            <thead>
+              <tr>
+                <th>会话编号</th>
+                <th>运行时间窗口</th>
+                <th>扫描规模</th>
+                <th>标的池与仓位</th>
+                <th>订单执行概况</th>
+                <th>净损益结算</th>
+                <th>核心验证结论</th>
+                <th>状态</th>
+              </tr>
+            </thead>
+            <tbody id="sessionHistoryTableBody">
+              <tr><td colspan="8" style="text-align:center; color:var(--text-muted); padding:1.5rem;">正在加载历史沙盘会话台账...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <p>Quant-FX Research Platform · 纯静态只读学术与外汇模拟沙盘展示大盘</p>
+    <p style="color:var(--text-muted); font-size:0.78rem;">
+      执行环境: OANDA v20 Practice 虚拟账户沙盘 (零真实资金敞口 · 零敏感凭据存储)
+    </p>
+  </footer>
+
+  <script type="module">
+    import { QuantFX } from './assets/js/utils.js';
+
+    function formatSigned(val, decimals = 2, suffix = '') {
+      const n = Number(val || 0);
+      const sign = n > 0 ? '+' : '';
+      return `${sign}${n.toFixed(decimals)}${suffix}`;
+    }
+
+    function formatUsdSigned(val) {
+      const n = Number(val || 0);
+      if (n > 0) return `+$${n.toFixed(2)}`;
+      if (n < 0) return `-$${Math.abs(n).toFixed(2)}`;
+      return `$0.00`;
+    }
+
+    function renderNavChartSvg(trajectory, initNav) {
+      if (!Array.isArray(trajectory) || trajectory.length < 2) {
+        return '<div style="padding:2rem; text-align:center; color:var(--text-muted);">暂无净值曲线数据</div>';
+      }
+      const W = 680;
+      const H = 225;
+      const padL = 68;
+      const padR = 24;
+      const padT = 22;
+      const padB = 36;
+      const plotW = W - padL - padR;
+      const plotH = H - padT - padB;
+
+      const navs = trajectory.map(p => Number(p.nav_usd));
+      const minV = Math.min(...navs, initNav) - 1.5;
+      const maxV = Math.max(...navs, initNav) + 1.8;
+      const range = Math.max(maxV - minV, 1);
+
+      const toX = (idx) => padL + (idx / (trajectory.length - 1)) * plotW;
+      const toY = (v) => padT + plotH - ((v - minV) / range) * plotH;
+
+      const baseY = toY(initNav);
+      const pts = trajectory.map((p, i) => `${toX(i).toFixed(1)},${toY(Number(p.nav_usd)).toFixed(1)}`);
+      const linePath = `M ${pts.join(' L ')}`;
+      const areaPath = `${linePath} L ${toX(trajectory.length - 1).toFixed(1)},${(padT + plotH).toFixed(1)} L ${padL},${(padT + plotH).toFixed(1)} Z`;
+
+      // Y 轴 4 条刻度参考线
+      const yTicks = [minV + range * 0.1, initNav, minV + range * 0.65, maxV - range * 0.08];
+      const gridLines = yTicks.map(tv => {
+        const y = toY(tv).toFixed(1);
+        const isBase = Math.abs(tv - initNav) < 0.05;
+        const stroke = isBase ? 'rgba(88, 166, 255, 0.45)' : 'rgba(48, 54, 61, 0.65)';
+        const dash = isBase ? '4,3' : '2,4';
+        return `
+          <line x1="${padL}" y1="${y}" x2="${W - padR}" y2="${y}" stroke="${stroke}" stroke-dasharray="${dash}" stroke-width="1"/>
+          <text x="${padL - 8}" y="${Number(y) + 4}" text-anchor="end" fill="rgba(230,237,243,0.65)" font-size="10.5" font-family="JetBrains Mono, monospace">$${tv.toFixed(1)}</text>
+        `;
+      }).join('');
+
+      const dotsHtml = trajectory.map((p, i) => {
+        const cx = toX(i).toFixed(1);
+        const cy = toY(Number(p.nav_usd)).toFixed(1);
+        const diff = Number(p.cum_pnl_usd || 0);
+        const fill = diff > 0 ? '#3FB950' : (diff < 0 ? '#F85149' : '#58A6FF');
+        const showLabel = (i === 0 || i === 6 || i === 8 || i === trajectory.length - 1);
+        const labelHtml = showLabel ? `
+          <text x="${cx}" y="${Number(cy) - 9}" text-anchor="${i === trajectory.length - 1 ? 'end' : (i === 0 ? 'start' : 'middle')}" fill="${fill}" font-size="10" font-weight="700" font-family="JetBrains Mono, monospace">
+            ${diff >= 0 ? '+' : ''}${diff.toFixed(2)}
+          </text>
+        ` : '';
+        const xAxisHtml = (i % 2 === 0 || i === trajectory.length - 1) ? `
+          <text x="${cx}" y="${H - 10}" text-anchor="middle" fill="rgba(230,237,243,0.58)" font-size="10" font-family="JetBrains Mono, monospace">C${p.cycle} (${QuantFX.escapeHtml(p.time.slice(0, 5))})</text>
+        ` : '';
+        return `
+          <g>
+            <circle cx="${cx}" cy="${cy}" r="4.2" fill="${fill}" stroke="#0D1117" stroke-width="1.5">
+              <title>第 ${p.cycle} 轮 (${QuantFX.escapeHtml(p.time)}): $${Number(p.nav_usd).toFixed(2)} | ${QuantFX.escapeHtml(p.event)}</title>
+            </circle>
+            ${labelHtml}
+            ${xAxisHtml}
+          </g>
+        `;
+      }).join('');
+
+      return `
+        <svg viewBox="0 0 ${W} ${H}" style="width:100%; height:auto; display:block;" role="img" aria-label="模拟沙盘账户净值轨迹图">
+          <defs>
+            <linearGradient id="navAreaGrad" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#58A6FF" stop-opacity="0.28"/>
+              <stop offset="100%" stop-color="#58A6FF" stop-opacity="0.01"/>
+            </linearGradient>
+          </defs>
+          ${gridLines}
+          <path d="${areaPath}" fill="url(#navAreaGrad)"/>
+          <path d="${linePath}" fill="none" stroke="#58A6FF" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+          <line x1="${padL}" y1="${baseY.toFixed(1)}" x2="${W - padR}" y2="${baseY.toFixed(1)}" stroke="rgba(88,166,255,0.55)" stroke-dasharray="4,3" stroke-width="1.1"/>
+          ${dotsHtml}
+        </svg>
+      `;
+    }
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      const vt = await QuantFX.loadData('virtual_trade_summary.json');
+      if (!vt || !vt.latest_session) return;
+
+      const s = vt.latest_session;
+      const acc = vt.accuracy_audit || {};
+      const guards = Array.isArray(vt.risk_guards) ? vt.risk_guards : [];
+      const navTraj = Array.isArray(vt.nav_trajectory) ? vt.nav_trajectory : [];
+      const trades = Array.isArray(vt.executed_trades) ? vt.executed_trades : [];
+      const symbols = Array.isArray(vt.symbol_breakdown) ? vt.symbol_breakdown : [];
+      const auditRecs = Array.isArray(vt.audit_records) ? vt.audit_records : [];
+      const historyList = Array.isArray(vt.session_history) ? vt.session_history : [];
+
+      // 1. 更新顶部元信息与 4 大 KPI 卡片
+      const setText = (id, txt) => { const el = document.getElementById(id); if (el) el.textContent = txt; };
+      setText('metaSessionId', `#${s.session_id}`);
+      setText('metaAccountId', s.account_masked || '101-001-****9777-001');
+      setText('metaTimeWindow', `${s.start_time} ~ ${s.end_time}`);
+      setText('metaModelEngine', s.model_id || 'LGBM_ALPHA_CLUSTER_MAJOR_TREND_V1');
+
+      const elFinalNav = document.getElementById('kpiFinalNav');
+      if (elFinalNav) {
+        elFinalNav.innerHTML = `$${Number(s.final_nav_usd).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} <span style="font-size:0.88rem; font-weight:400; color:var(--text-muted);">USD</span>`;
+      }
+      setText('kpiNavDesc', `期初净值 $${Number(s.initial_nav_usd).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} · 净值回撤幅度 ${Number(s.session_drawdown_pct || 0).toFixed(4)}%`);
+
+      const pnlUsd = Number(s.total_net_pnl_usd || 0);
+      const pnlColor = pnlUsd > 0 ? 'var(--color-bull)' : (pnlUsd < 0 ? 'var(--color-gold)' : 'var(--text-primary)');
+      const elNetPnl = document.getElementById('kpiNetPnl');
+      if (elNetPnl) {
+        elNetPnl.style.color = pnlColor;
+        elNetPnl.innerHTML = `${formatUsdSigned(pnlUsd)} <span style="font-size:0.88rem; font-weight:400; color:var(--text-muted);">/ ${formatSigned(s.total_net_pips, 2, ' Pips')}</span>`;
+      }
+      setText('kpiPfDesc', `总毛利 +$${Number(s.gross_profit_usd || 0).toFixed(2)} / 总毛亏 -$${Math.abs(Number(s.gross_loss_usd || 0)).toFixed(2)} · 盈亏比 (PF) ${Number(s.profit_factor || 0).toFixed(2)}`);
+
+      const elTradeStats = document.getElementById('kpiTradeStats');
+      if (elTradeStats) {
+        elTradeStats.innerHTML = `${Number(s.total_trades)} 笔 <span style="font-size:0.88rem; font-weight:400; color:var(--text-muted);">胜率 ${Number(s.trade_win_rate_pct).toFixed(1)}%</span>`;
+      }
+      setText('kpiTradeDesc', `${s.win_trades} 笔触及 TP 止盈 / ${s.loss_trades} 笔触及 SL 原子止损 · 单笔 ${Number(s.trade_units || 10000).toLocaleString()} units`);
+
+      const elFilterRate = document.getElementById('kpiFilterRate');
+      if (elFilterRate) {
+        elFilterRate.innerHTML = `${Number(s.flat_filter_ratio_pct).toFixed(2)}% <span style="font-size:0.88rem; font-weight:400; color:var(--text-muted);">防御率</span>`;
+      }
+      setText('kpiFilterDesc', `${s.total_cycles} 轮共 ${s.total_scans} 次实时扫描 · 仅放行净边际 ≥ ${Number(s.min_net_edge_pips || 1.8).toFixed(1)} Pips 高赔率信号`);
+
+      // 2. 绘制左舞台 SVG 净值曲线与峰值徽章
+      const navChartEl = document.getElementById('navChartContainer');
+      if (navChartEl) {
+        navChartEl.innerHTML = renderNavChartSvg(navTraj, Number(s.initial_nav_usd));
+      }
+      if (navTraj.length > 0) {
+        const maxNavPt = navTraj.reduce((best, cur) => Number(cur.nav_usd) > Number(best.nav_usd) ? cur : best, navTraj[0]);
+        setText('navPeakBadge', `盘中峰值 $${Number(maxNavPt.nav_usd).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} (${formatUsdSigned(maxNavPt.cum_pnl_usd)})`);
+      }
+      setText('specCycles', `${s.duration_minutes}m · ${s.frequency_minutes}m/轮 (${s.total_cycles}轮)`);
+      setText('specUniverse', `${(s.target_symbols || []).length} 只 G7 美元直盘`);
+      setText('specEdge', `${Number(s.trade_units || 10000).toLocaleString()}u · ≥${Number(s.min_net_edge_pips || 1.8).toFixed(2)}p`);
+
+      // 3. 渲染右舞台：多窗口到期方向预测准确率比例条（scaleX 合成器动画）
+      const accContainer = document.getElementById('accuracyBarsContainer');
+      if (accContainer) {
+        const rows = [
+          { label: '5min 到期方向命中率', pct: Number(acc.accuracy_5m_pct || 0), detail: `${acc.hits_5m || 5}/${acc.samples_5m || 16}`, color: 'var(--color-gold)' },
+          { label: '15min 到期方向命中率', pct: Number(acc.accuracy_15m_pct || 0), detail: `${acc.hits_15m || 5}/${acc.samples_15m || 13}`, color: 'var(--color-accent)' },
+          { label: '30min 主目标窗口命中率', pct: Number(acc.accuracy_30m_pct || 0), detail: `${acc.hits_30m || 5}/${acc.samples_30m || 12}`, color: 'var(--color-bull)' },
+          { label: '全周期综合方向准确率', pct: Number(acc.overall_directional_acc_pct || 0), detail: `${acc.hits_overall || 15}/${acc.samples_overall || 41}`, color: 'var(--color-purple)' }
+        ];
+        accContainer.innerHTML = rows.map(r => {
+          const ratio = Math.min(1, Math.max(0.08, r.pct / 100)).toFixed(3);
+          return `
+            <div style="margin-bottom:0.65rem;">
+              <div style="display:flex; justify-content:space-between; font-size:0.78rem; margin-bottom:0.25rem;">
+                <span style="color:var(--text-secondary);">${QuantFX.escapeHtml(r.label)}</span>
+                <span class="tabular-numbers" style="font-weight:700; color:var(--text-primary);">${r.pct.toFixed(2)}% <span style="color:var(--text-muted); font-weight:400;">(${QuantFX.escapeHtml(r.detail)})</span></span>
+              </div>
+              <div class="composited-bar-track">
+                <div class="composited-bar-fill" style="background:${r.color}; transform:scaleX(${ratio});"></div>
+              </div>
+            </div>
+          `;
+        }).join('') + `
+          <div style="margin-top:0.75rem; padding-top:0.6rem; border-top:1px dashed var(--border-muted); display:flex; justify-content:space-between; font-size:0.76rem; color:var(--text-secondary);">
+            <span>预测点数平均绝对误差 (MAE): <strong class="tabular-numbers" style="color:var(--text-primary);">${Number(acc.prediction_mae_pips || 17.26).toFixed(2)} Pips</strong></span>
+            <span>盈亏预判综合命中: <strong class="tabular-numbers" style="color:var(--text-primary);">${Number(acc.profitability_call_acc_pct || 14.52).toFixed(2)}%</strong></span>
+          </div>
+        `;
+      }
+
+      // 4. 渲染右舞台：四道风控防线状态
+      const guardsEl = document.getElementById('riskGuardsContainer');
+      if (guardsEl) {
+        guardsEl.innerHTML = guards.map(g => `
+          <div style="background:var(--bg-subtle); border-left:3px solid var(--color-bull); border-radius:6px; padding:0.55rem 0.75rem;">
+            <div style="display:flex; justify-content:space-between; align-items:center; gap:0.5rem; margin-bottom:0.2rem;">
+              <span style="font-size:0.8rem; font-weight:700; color:var(--text-primary);">${QuantFX.escapeHtml(g.guard_id)} · ${QuantFX.escapeHtml(g.name)}</span>
+              <span class="badge badge-green" style="font-size:0.7rem;">✓ ${QuantFX.escapeHtml(g.status)}</span>
+            </div>
+            <div style="font-size:0.75rem; color:var(--text-secondary); line-height:1.45;">
+              ${QuantFX.escapeHtml(g.observed)}
+            </div>
+          </div>
+        `).join('');
+      }
+
+      // 5. 渲染 7 只直盘分标的微观表现卡片
+      const symGrid = document.getElementById('symbolBreakdownGrid');
+      if (symGrid) {
+        symGrid.innerHTML = symbols.map(item => {
+          const rUsd = Number(item.realized_pnl_usd || 0);
+          const rPips = Number(item.realized_pips || 0);
+          const movePips = Number(item.session_move_pips || 0);
+          const borderColor = rUsd > 0 ? 'var(--color-bull)' : (rUsd < 0 ? 'var(--color-bear)' : 'var(--border-default)');
+          const pnlBadgeClass = rUsd > 0 ? 'badge-green' : (rUsd < 0 ? 'badge-gold' : 'badge-gray');
+          const pnlBadgeText = item.trades_count > 0
+            ? `${formatUsdSigned(rUsd)} (${formatSigned(rPips, 2, 'p')})`
+            : '空仓防御 ($0.00)';
+          const decimals = item.symbol.includes('JPY') ? 3 : 5;
+          const sparkColor = movePips >= 0 ? '#3FB950' : '#F85149';
+          const sparkSvg = QuantFX.renderSparkline(item.sparkline || [], 104, 28, sparkColor);
+
+          return `
+            <div class="card symbol-sandbox-card" style="border-top: 3px solid ${borderColor};">
+              <div>
+                <div style="display:flex; justify-content:space-between; align-items:center; gap:0.5rem; margin-bottom:0.5rem;">
+                  <div>
+                    <div style="font-family:var(--font-mono); font-size:1.05rem; font-weight:800; color:var(--text-primary);">${QuantFX.escapeHtml(item.symbol)}</div>
+                    <div style="font-size:0.74rem; color:var(--text-muted);">${QuantFX.escapeHtml(item.pair_label || item.symbol)}</div>
+                  </div>
+                  <span class="badge ${pnlBadgeClass} tabular-numbers">${pnlBadgeText}</span>
+                </div>
+
+                <div style="display:flex; justify-content:space-between; align-items:center; padding:0.45rem 0.6rem; background:var(--bg-canvas); border-radius:6px; margin-bottom:0.6rem;">
+                  <div>
+                    <div style="font-size:0.7rem; color:var(--text-muted);">开盘 → 收盘 Mid</div>
+                    <div class="tabular-numbers" style="font-size:0.8rem; font-family:var(--font-mono); color:var(--text-primary);">
+                      ${Number(item.open_mid).toFixed(decimals)} → ${Number(item.close_mid).toFixed(decimals)}
+                    </div>
+                  </div>
+                  ${sparkSvg}
+                </div>
+
+                <div class="kv-mini-grid">
+                  <div>
+                    <div class="kv-mini-label">会话波幅</div>
+                    <div class="kv-mini-val" style="color:${movePips >= 0 ? 'var(--color-bull)' : 'var(--color-bear)'};">${formatSigned(movePips, 2, 'p')}</div>
+                  </div>
+                  <div>
+                    <div class="kv-mini-label">平均实时点差</div>
+                    <div class="kv-mini-val">${Number(item.avg_spread_pips).toFixed(2)}p</div>
+                  </div>
+                  <div>
+                    <div class="kv-mini-label">5m ATR / RSI14</div>
+                    <div class="kv-mini-val">${Number(item.atr_5m_pips).toFixed(1)}p / ${Number(item.rsi_14).toFixed(0)}</div>
+                  </div>
+                  <div>
+                    <div class="kv-mini-label">信号 / 成交笔数</div>
+                    <div class="kv-mini-val">${Number(item.signals_count)} 次 / ${Number(item.trades_count)} 笔</div>
+                  </div>
+                </div>
+              </div>
+
+              <div style="font-size:0.76rem; color:var(--text-secondary); border-top:1px dashed var(--border-muted); padding-top:0.5rem; line-height:1.45;">
+                ${QuantFX.escapeHtml(item.defense_note || '')}
+              </div>
+            </div>
+          `;
+        }).join('');
+      }
+
+      // 6. 渲染 4 笔成交原子括号单明细表
+      const tradesTbody = document.getElementById('executedTradesTableBody');
+      if (tradesTbody) {
+        tradesTbody.innerHTML = trades.map(t => {
+          const isLong = t.direction === 'LONG';
+          const dirBadge = isLong ? '<span class="badge badge-green">▲ LONG</span>' : '<span class="badge badge-gold">▼ SHORT</span>';
+          const dec = t.symbol.includes('JPY') ? 3 : 5;
+          const rPips = Number(t.realized_pips || 0);
+          const rUsd = Number(t.realized_pnl_usd || 0);
+          const pnlCls = rUsd > 0 ? 'pnl-pos' : (rUsd < 0 ? 'pnl-neg' : 'pnl-flat');
+          const reasonBadge = rUsd > 0
+            ? `<span class="badge badge-green">${QuantFX.escapeHtml(t.exit_reason || 'TP_HIT')}</span>`
+            : `<span class="badge badge-gold">${QuantFX.escapeHtml(t.exit_reason || 'SL_PROTECT')}</span>`;
+
+          return `
+            <tr>
+              <td class="tabular-numbers">
+                <strong style="color:var(--color-accent); font-family:var(--font-mono);">Cycle ${Number(t.cycle)}</strong>
+                <div style="font-size:0.74rem; color:var(--text-muted); font-family:var(--font-mono);">${QuantFX.escapeHtml(t.open_time)}</div>
+              </td>
+              <td><strong style="font-family:var(--font-mono);">${QuantFX.escapeHtml(t.symbol)}</strong></td>
+              <td class="tabular-numbers">${dirBadge} <span style="font-family:var(--font-mono); font-size:0.8rem;">${Number(t.units).toLocaleString()}</span></td>
+              <td class="tabular-numbers" style="font-family:var(--font-mono);">${Number(t.entry_price).toFixed(dec)}</td>
+              <td class="tabular-numbers">${Number(t.spread_pips).toFixed(1)}p</td>
+              <td class="tabular-numbers" style="font-family:var(--font-mono); font-size:0.8rem;">
+                <span style="color:var(--color-bear);">SL ${QuantFX.escapeHtml(t.stop_loss_price)}</span> /
+                <span style="color:var(--color-bull);">TP ${QuantFX.escapeHtml(t.take_profit_price)}</span>
+              </td>
+              <td class="tabular-numbers" style="font-family:var(--font-mono); font-size:0.8rem;">
+                ${formatSigned(t.pred_5m_pips, 2)}p / ${formatSigned(t.pred_15m_pips, 2)}p / <strong>${formatSigned(t.pred_30m_pips, 2)}p</strong>
+              </td>
+              <td class="tabular-numbers">
+                <div style="font-family:var(--font-mono); font-weight:600;">${Number(t.exit_price).toFixed(dec)}</div>
+                <div style="margin-top:0.15rem;">${reasonBadge}</div>
+              </td>
+              <td class="${pnlCls}">${formatSigned(rPips, 2, ' Pips')}</td>
+              <td class="${pnlCls}">${formatUsdSigned(rUsd)}</td>
+              <td><span class="badge badge-blue">✓ ${QuantFX.escapeHtml(t.status)} (#${QuantFX.escapeHtml(t.trade_id)})</span></td>
+            </tr>
+          `;
+        }).join('');
+      }
+
+      // 7. 渲染逐轮预测对账舱（带双维过滤）
+      let currentMode = 'ALL';
+      let currentSym = 'ALL';
+      const vaultTbody = document.getElementById('auditVaultTableBody');
+
+      function renderAuditVault() {
+        if (!vaultTbody) return;
+        const rows = auditRecs.filter(r => {
+          if (currentSym !== 'ALL' && r.symbol !== currentSym) return false;
+          if (currentMode === 'OPEN_ONLY') return r.action !== 'HOLD_FLAT';
+          if (currentMode === 'SIGNAL_ONLY') return r.pred_dir !== 'FLAT';
+          return true;
+        });
+
+        if (rows.length === 0) {
+          vaultTbody.innerHTML = '<tr><td colspan="11" style="text-align:center; padding:2rem; color:var(--text-muted);">当前筛选条件下无匹配对账记录（该标的全程被点差与微观门控过滤空仓）</td></tr>';
+          return;
+        }
+
+        vaultTbody.innerHTML = rows.map(r => {
+          const dec = r.symbol.includes('JPY') ? 3 : 5;
+          const dirBadge = r.pred_dir === 'LONG'
+            ? '<span class="badge badge-green">LONG</span>'
+            : (r.pred_dir === 'SHORT' ? '<span class="badge badge-gold">SHORT</span>' : '<span class="badge badge-gray">FLAT</span>');
+          const hitBadge = r.hit === 'HIT'
+            ? '<span class="badge badge-green">✓ HIT</span>'
+            : (r.hit === 'MISS' ? '<span class="badge badge-gold">✕ MISS</span>' : '<span style="color:var(--text-muted);">-</span>');
+          const actBadge = r.action.startsWith('OPEN_')
+            ? `<span class="badge badge-blue">${QuantFX.escapeHtml(r.action)}</span>`
+            : (r.action.startsWith('KEEP_')
+              ? `<span class="badge badge-purple">${QuantFX.escapeHtml(r.action)}</span>`
+              : `<span style="font-family:var(--font-mono); font-size:0.76rem; color:var(--text-muted);">${QuantFX.escapeHtml(r.action)}</span>`);
+          const actMove = Number(r.actual_pips || 0);
+          const moveCls = actMove > 0 ? 'pnl-pos' : (actMove < 0 ? 'pnl-neg' : 'pnl-flat');
+
+          return `
+            <tr>
+              <td class="tabular-numbers" style="font-family:var(--font-mono); font-weight:700; color:var(--color-accent);">#${Number(r.cycle)}</td>
+              <td class="tabular-numbers" style="font-family:var(--font-mono); color:var(--text-secondary);">${QuantFX.escapeHtml(r.time)}</td>
+              <td><strong style="font-family:var(--font-mono);">${QuantFX.escapeHtml(r.symbol)}</strong></td>
+              <td class="tabular-numbers" style="font-family:var(--font-mono);">${Number(r.mid).toFixed(dec)}</td>
+              <td class="tabular-numbers">${Number(r.spread).toFixed(1)}p</td>
+              <td>${dirBadge}</td>
+              <td class="tabular-numbers" style="font-family:var(--font-mono); font-size:0.79rem;">
+                ${formatSigned(r.pred_5m, 2)}p / ${formatSigned(r.pred_15m, 2)}p / <strong>${formatSigned(r.pred_30m, 2)}p</strong>
+              </td>
+              <td class="tabular-numbers" style="font-family:var(--font-mono); font-size:0.79rem;">
+                ${formatSigned(r.exp_net_pips, 2)}p (${formatUsdSigned(r.exp_net_usd)})
+              </td>
+              <td class="${moveCls}">${formatSigned(actMove, 2, 'p')}</td>
+              <td>${hitBadge}</td>
+              <td>${actBadge}</td>
+            </tr>
+          `;
+        }).join('');
+      }
+
+      renderAuditVault();
+
+      document.querySelectorAll('#auditModeBtns .audit-mode-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          document.querySelectorAll('#auditModeBtns .audit-mode-btn').forEach(b => { b.className = 'badge badge-gray audit-mode-btn'; });
+          btn.className = 'badge badge-blue audit-mode-btn';
+          currentMode = btn.getAttribute('data-mode');
+          renderAuditVault();
+        });
+      });
+
+      document.querySelectorAll('#auditSymbolBtns .sym-filter-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          document.querySelectorAll('#auditSymbolBtns .sym-filter-btn').forEach(b => { b.className = 'badge badge-gray sym-filter-btn'; });
+          btn.className = 'badge badge-cyan sym-filter-btn';
+          currentSym = btn.getAttribute('data-sym');
+          renderAuditVault();
+        });
+      });
+
+      // 8. 渲染历史沙盘验证台账
+      const histTbody = document.getElementById('sessionHistoryTableBody');
+      if (histTbody) {
+        histTbody.innerHTML = historyList.map(h => {
+          const stClass = h.status === 'COMPLETED' ? 'badge-green' : 'badge-gray';
+          return `
+            <tr>
+              <td class="tabular-numbers" style="font-family:var(--font-mono); font-weight:700; color:var(--color-accent);">#${QuantFX.escapeHtml(h.session_id)}</td>
+              <td class="tabular-numbers" style="font-size:0.82rem;">${QuantFX.escapeHtml(h.window)}</td>
+              <td class="tabular-numbers">${QuantFX.escapeHtml(h.cycles_scans)}</td>
+              <td style="font-size:0.82rem;">${QuantFX.escapeHtml(h.universe)}</td>
+              <td style="font-weight:600;">${QuantFX.escapeHtml(h.trades_summary)}</td>
+              <td class="tabular-numbers" style="font-family:var(--font-mono); color:var(--color-gold); font-weight:600;">${QuantFX.escapeHtml(h.net_pnl)}</td>
+              <td style="font-size:0.82rem; color:var(--text-secondary);">${QuantFX.escapeHtml(h.key_metric)}</td>
+              <td><span class="badge ${stClass}">✓ ${QuantFX.escapeHtml(h.status)}</span></td>
+            </tr>
+          `;
+        }).join('');
+      }
+    });
+  </script>
+  <script src="assets/js/pwa.js"></script>
+</body>
+</html>
