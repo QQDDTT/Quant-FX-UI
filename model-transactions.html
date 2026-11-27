@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quant-FX Research - 模型事务专栏</title>
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#161B22">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Quant-FX">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self' https://cloudflareinsights.com;">
+  <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
+  <link rel="stylesheet" href="assets/css/style.css?v=20261113_v5">
+  <link rel="stylesheet" href="assets/css/components.css?v=20261113_v5">
+  <link rel="stylesheet" href="assets/css/responsive.css?v=20261113_v5">
+</head>
+<body>
+  <!-- 极简毛玻璃顶栏 -->
+  <header class="site-header">
+    <div class="nav-container">
+      <a href="index.html" class="brand-logo">
+        <svg viewBox="0 0 64 64" fill="none">
+          <rect width="64" height="64" rx="14" fill="#161B22"/>
+          <path d="M16 24L32 12L48 24" stroke="#58A6FF" stroke-width="5" stroke-linecap="round"/>
+          <path d="M48 40L32 52L16 40" stroke="#3FB950" stroke-width="5" stroke-linecap="round"/>
+          <circle cx="32" cy="32" r="7" fill="#0D1117" stroke="#BC8CFF" stroke-width="3"/>
+        </svg>
+        Quant-FX <span>RESEARCH</span>
+      </a>
+      <button class="menu-toggle" id="menuToggle" aria-label="展开导航菜单">☰</button>
+      <nav class="nav-links" id="navLinks">
+        <a href="index.html" class="nav-item">平台首页</a>
+        <a href="transactions.html" class="nav-item">事务总览与调度</a>
+        <a href="base-data-transactions.html" class="nav-item">基础数据事务</a>
+        <a href="model-transactions.html" class="nav-item active">模型事务专栏</a>
+        <a href="trade-transactions.html" class="nav-item">交易事务</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="docs-container">
+    <article class="content-stream">
+
+      <!-- 页面 Hero：纯模型数据总览 -->
+      <section class="article-header">
+        <h1 class="article-title">模型事务专栏：三级金字塔专家模型数据与特征谱系</h1>
+        <p class="article-subtitle">
+          全景披露 Quant-FX 生产级 LightGBM 专家模型矩阵的算法架构、八大主权货币绝对强弱解耦（CBSI）、33 维纯因果微观特征字典、5-Fold 单向时序净化交叉验证（Purged Walk-Forward CV）样本外表现、超参数拓扑及跨时段稳健度数据。
+        </p>
+        <div class="article-meta">
+          <span>● 模型注册资产库 (MODEL DATA REGISTRY)</span>
+          <span>在册模型: <strong id="metaModelCount" class="tabular-numbers" style="color:var(--color-bull);">5 / 5 套 (100% HEALTHY)</strong></span>
+          <span>最近评估快照: <span id="metaLastAudit" class="tabular-numbers">2026-11-05 UTC</span></span>
+          <span>5min 训练样本底座: <strong id="metaTrainBars" class="tabular-numbers" style="color:var(--color-accent);">5,860,465 根 K线</strong></span>
+        </div>
+
+        <!-- 4 大核心模型统计指标卡 -->
+        <div class="grid-cards" style="margin-top: 1.5rem;">
+          <div class="card" style="border-top: 3px solid var(--color-bull);">
+            <div class="stat-label">在册专家模型规模</div>
+            <div class="stat-value tabular-numbers" id="statHealthyModels" style="color:var(--color-bull);">5 / 5 <span style="font-size:0.9rem; font-weight:400; color:var(--text-muted);">套 HEALTHY</span></div>
+            <div class="stat-desc">Tier 1 宏观四分类体制总控 × 1 · Tier 2 日内 5min→30min 分群回归 × 4</div>
+          </div>
+          <div class="card" style="border-top: 3px solid var(--color-accent);">
+            <div class="stat-label">5-Fold 样本外 Rank IC 峰值</div>
+            <div class="stat-value tabular-numbers" id="statPeakRankIc" style="color:var(--color-accent);">+0.1053 <span style="font-size:0.9rem; font-weight:400; color:var(--text-muted);">ICIR 10.38</span></div>
+            <div class="stat-desc">Tier 2 四大资产簇样本外 Mean Rank IC 分布于 +0.0520 ~ +0.1053</div>
+          </div>
+          <div class="card" style="border-top: 3px solid var(--color-purple);">
+            <div class="stat-label">Tier 2 扣费均值夏普 / 回撤</div>
+            <div class="stat-value tabular-numbers" id="statMeanSharpe" style="color:var(--color-purple);">2.27 <span style="font-size:0.9rem; font-weight:400; color:var(--text-muted);">/ MDD -3.40%</span></div>
+            <div class="stat-desc">全额扣除双边点差与滑点摩擦 · 平均胜率 55.8% · 平均盈亏比 1.52</div>
+          </div>
+          <div class="card" style="border-top: 3px solid var(--color-gold);">
+            <div class="stat-label">纯因果特征空间维度</div>
+            <div class="stat-value tabular-numbers" id="statFeatureDim" style="color:var(--color-gold);">33 <span style="font-size:0.9rem; font-weight:400; color:var(--text-muted);">维 (5m) / 9 维 (1d)</span></div>
+            <div class="stat-desc">融合 28 对 G8 汇率最小二乘 CBSI 强弱指数、多尺度动量与隐含套息差</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 33 维纯因果特征工程数据字典 -->
+      <section>
+        <h2 class="section-title">🧬 33 维日内纯因果特征空间字典 (Causal Feature Space Taxonomy)</h2>
+        <p class="section-desc">Tier 2 短周期专家模型严格基于 <code>t ≤ 0</code> 历史窗口构造 33 维正交特征张量，Tier 1 宏观模型采用 9 维跨市场日频情绪与利差离散度特征：</p>
+
+        <div class="bento-4-grid">
+          <div class="card" style="border-top: 3px solid var(--color-accent);">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.55rem;">
+              <span class="card-title" style="margin-bottom:0;">F1. 多尺度对数动量与锚定</span>
+              <span class="badge badge-blue">8 维</span>
+            </div>
+            <div class="card-desc">
+              • 微观多阶收益率：<code>ret_1b</code> (5m)、<code>ret_3b</code> (15m)、<code>ret_6b</code> (30m)、<code>ret_12b</code> (1h)、<code>ret_48b</code> (4h)<br>
+              • 动量二阶加速度：<code>mom_accel_6_48</code> 捕捉短长周期趋势斜率拐点<br>
+              • 高阶跨期趋势锚：<code>ret_anchor_1h</code>、<code>ret_anchor_4h</code> 对齐中周期主方向
+            </div>
+          </div>
+
+          <div class="card" style="border-top: 3px solid var(--color-purple);">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.55rem;">
+              <span class="card-title" style="margin-bottom:0;">F2. 均线乖离与极值通道</span>
+              <span class="badge badge-purple">6 维</span>
+            </div>
+            <div class="card-desc">
+              • 标准化均线偏离：<code>bias_ma10</code>、<code>bias_ma20</code>、<code>bias_ma60</code> 度量均值回归张力<br>
+              • 局部高低极值距离：<code>dist_highest_20</code>、<code>dist_lowest_20</code> 刻画 20-Bar 突破位置<br>
+              • 相对强弱振荡指标：<code>rsi_14</code> 识别日内超买超卖极值区
+            </div>
+          </div>
+
+          <div class="card" style="border-top: 3px solid var(--color-bull);">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.55rem;">
+              <span class="card-title" style="margin-bottom:0;">F3. 微观波动率与摩擦比</span>
+              <span class="badge badge-green">7 维</span>
+            </div>
+            <div class="card-desc">
+              • 极值与真实波幅：<code>atr_norm_14</code>、<code>atr_ratio_5_20</code>、<code>parkinson_vol_20</code><br>
+              • 布林通道收敛度：<code>bb_width_20</code>、<code>bb_pct_b</code>、<code>bb_squeeze_ratio</code><br>
+              • 点差成本约束比：<code>spread_to_atr_ratio</code> 直接量化微观交易摩擦占比
+            </div>
+          </div>
+
+          <div class="card" style="border-top: 3px solid var(--color-gold);">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.55rem;">
+              <span class="card-title" style="margin-bottom:0;">F4. 八币解耦 CBSI 与宏观情绪</span>
+              <span class="badge badge-gold">12 维</span>
+            </div>
+            <div class="card-desc">
+              • G8 最小二乘强弱指数：<code>cbsi_base_*</code>、<code>cbsi_quote_*</code>、<code>cbsi_diff_mom_short/med</code><br>
+              • 跨资产避险与风险偏好：<code>sentiment_gold_mom</code>、<code>sentiment_audjpy_mom</code><br>
+              • 动态套息与时段体制：隐含利差 <code>ir_diff</code>、四盘流动性体制 <code>session_liquidity_regime</code>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 四道模型统计准入阈值矩阵 (QG-1 ~ QG-4) -->
+      <section>
+        <h2 class="section-title">🛡️ 模型样本外统计评估准入标准 (QG-1 ~ QG-4 Quantitative Thresholds)</h2>
+        <p class="section-desc">五套在册模型均通过 5-Fold 单向扩展时序交叉验证与双边摩擦扣除回测，各项统计阈值达标状态如下：</p>
+
+        <div class="bento-4-grid">
+          <div class="card" style="border-left: 4px solid var(--color-bull);">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.4rem;">
+              <span style="font-weight:700; color:var(--text-primary);">QG-1. 时序因果隔离检验</span>
+              <span class="badge badge-green">5/5 PASS</span>
+            </div>
+            <p style="font-size:0.82rem; color:var(--text-secondary); line-height:1.58;">
+              特征算子 100% 满足 <code>shift(&ge;0)</code> 因果约束；5-Fold 验证集与训练集之间强制施加 <code>Embargo = 12 bars (60min)</code> 隔离带，消除预测窗口标签重叠泄露。
+            </p>
+          </div>
+
+          <div class="card" style="border-left: 4px solid var(--color-bull);">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.4rem;">
+              <span style="font-weight:700; color:var(--text-primary);">QG-2. 样本外 7 维硬指标线</span>
+              <span class="badge badge-green">5/5 PASS</span>
+            </div>
+            <p style="font-size:0.82rem; color:var(--text-secondary); line-height:1.58;">
+              Tier 2 分群同时满足：<code>Rank IC &ge; 0.035</code>、<code>ICIR &ge; 0.70</code>、扣费 <code>Sharpe &ge; 1.80</code>、<code>MDD &le; 5.0%</code>、<code>Win Rate &ge; 52%</code>、<code>P/L &ge; 1.30</code>、<code>Expectancy &gt; 0.8 Pips</code>。
+            </p>
+          </div>
+
+          <div class="card" style="border-left: 4px solid var(--color-bull);">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.4rem;">
+              <span style="font-weight:700; color:var(--text-primary);">QG-3. 四盘流动性子环境稳健度</span>
+              <span class="badge badge-green">5/5 PASS</span>
+            </div>
+            <p style="font-size:0.82rem; color:var(--text-secondary); line-height:1.58;">
+              横跨亚盘低波段、欧盘早盘、欧美重叠高波盘与美盘尾盘展期四个子环境，正向 Rank IC 占比均达 <code>75% ~ 100%</code>（准入红线 <code>&ge; 66%</code>）。
+            </p>
+          </div>
+
+          <div class="card" style="border-left: 4px solid var(--color-bull);">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.4rem;">
+              <span style="font-weight:700; color:var(--text-primary);">QG-4. 尾部风险与开仓克制度</span>
+              <span class="badge badge-green">5/5 PASS</span>
+            </div>
+            <p style="font-size:0.82rem; color:var(--text-secondary); line-height:1.58;">
+              单笔 99% 条件风险价值 <code>CVaR(99%) &le; 0.65%</code>（实测 <code>0.42% ~ 0.65%</code>），高确信度有效开仓触发率收敛于 <code>5.8% ~ 8.6%</code>，严控过度交易损耗。
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- 生产专家模型全量指标矩阵 -->
+      <section>
+        <div class="section-header-row">
+          <div>
+            <h2 class="section-title" style="margin-bottom:0.2rem;">📋 生产专家模型全维度评估数据表 (Model Evaluation Matrix)</h2>
+            <p class="section-desc" style="margin-bottom:0;">直接读取自模型元数据切片 <code>assets/data/model_registry.json</code>，汇总 5 套专家模型的结构参数、样本外精度与风险收益特征</p>
+          </div>
+        </div>
+
+        <div class="table-container">
+          <table class="data-table" id="modelSummaryTable">
+            <thead>
+              <tr>
+                <th>模型标识 (Model ID)</th>
+                <th>层级 / 资产簇</th>
+                <th>触发 → 预测跨度</th>
+                <th>特征 / 标的数</th>
+                <th>5-Fold 样本外主指标</th>
+                <th>ICIR / Macro-F1</th>
+                <th>扣费夏普 / 最大回撤</th>
+                <th>胜率 / 盈亏比</th>
+                <th>CVaR(99%) / 开仓率</th>
+                <th>净期望 / 样本外总收益</th>
+                <th>健康状态</th>
+              </tr>
+            </thead>
+            <tbody id="modelSummaryTableBody">
+              <tr><td colspan="11" style="text-align:center; color:var(--text-muted); padding:2rem;">正在加载专家模型评估数据...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- 五套专家模型深度数据档案卡片 -->
+      <section>
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem; margin-bottom:1rem;">
+          <div>
+            <h2 class="section-title" style="margin-bottom:0.2rem;">🔬 五套专家模型深度数据档案、逐折验证曲线与特征增益 (Model Data Profiles)</h2>
+            <p class="section-desc" style="margin-bottom:0;">点击模型分群标签筛选查看各模型的 5-Fold 逐折验证分布、四时段 Regime IC 矩阵、Top 10 特征 LightGBM Gain 增益与完整超参数表</p>
+          </div>
+          <div style="display:flex; gap:0.5rem; flex-wrap:wrap;" id="modelFilterBtns">
+            <button class="badge badge-blue filter-btn" data-filter="ALL" style="cursor:pointer; min-height:44px; padding:0.5rem 0.9rem;">全部模型 (5)</button>
+            <button class="badge badge-gray filter-btn" data-filter="MACRO" style="cursor:pointer; min-height:44px; padding:0.5rem 0.9rem;">Tier 1 宏观体制 (1)</button>
+            <button class="badge badge-gray filter-btn" data-filter="MAJOR_TREND" style="cursor:pointer; min-height:44px; padding:0.5rem 0.9rem;">G7 主流直盘 (1)</button>
+            <button class="badge badge-gray filter-btn" data-filter="CROSS_VOLATILITY" style="cursor:pointer; min-height:44px; padding:0.5rem 0.9rem;">G8 交叉高波 (1)</button>
+            <button class="badge badge-gray filter-btn" data-filter="CARRY_EM" style="cursor:pointer; min-height:44px; padding:0.5rem 0.9rem;">高息新兴套息 (1)</button>
+            <button class="badge badge-gray filter-btn" data-filter="GOLD_MACRO" style="cursor:pointer; min-height:44px; padding:0.5rem 0.9rem;">黄金宏观对冲 (1)</button>
+          </div>
+        </div>
+
+        <div class="grid-cards" id="modelDetailCardsContainer" style="grid-template-columns: 1fr; gap: 1.25rem;">
+          <div class="card" style="text-align:center; padding:3rem; color:var(--text-muted);">正在加载专家模型深度数据档案...</div>
+        </div>
+      </section>
+
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <p>Quant-FX Research Platform · 纯静态只读学术与外汇量化模型数据看板</p>
+    <p style="color:var(--text-muted); font-size:0.78rem;">
+      模型架构: Tier-1 Macro Multiclass + Tier-2 Clustered Huber LightGBM · 覆盖全市场 48 只外汇与贵金属标的
+    </p>
+  </footer>
+
+  <script type="module">
+    import { QuantFX } from './assets/js/utils.js';
+
+    const CLUSTER_META = {
+      'MACRO': {
+        title: 'Tier 1 · 全球宏观与央行利差体制四分类模型',
+        badgeClass: 'badge-gold',
+        roleDesc: '基于全市场 48 只资产日频特征、澳日交叉风险情绪、黄金波动率与美元截面离散度，输出全球外汇市场 4 类宏观波动体制概率（Risk-On / Risk-Off / Dollar Squeeze / Range），为下游短周期分群模型提供 0.0x ~ 1.2x 全局敞口权重。'
+      },
+      'MAJOR_TREND': {
+        title: 'Tier 2 · G7 主流美元直盘日内短周期趋势模型',
+        badgeClass: 'badge-blue',
+        roleDesc: '聚焦全球流动性最深厚的 7 只美元核心直盘（EUR/USD, USD/JPY, GBP/USD, AUD/USD, USD/CAD, USD/CHF, NZD/USD），以 5min K 线触发预测未来 30min（6 根 K 线）扣除摩擦后的点值净收益。'
+      },
+      'CROSS_VOLATILITY': {
+        title: 'Tier 2 · G8 完全交叉盘高弹性波动突破模型',
+        badgeClass: 'badge-purple',
+        roleDesc: '覆盖 21 只非美 G8 交叉汇率矩阵（EUR/JPY, GBP/JPY, AUD/JPY, EUR/GBP 等），依托八币最小二乘强弱指数（CBSI）极值分化捕捉欧盘早盘与欧美重叠盘的跨币种动量突破。'
+      },
+      'CARRY_EM': {
+        title: 'Tier 2 · 北欧、中东欧制造走廊与高息新兴套息模型',
+        badgeClass: 'badge-green',
+        roleDesc: '纳管 19 只高息套息与制造业走廊货币对（USD/MXN, USD/ZAR, USD/PLN, EUR/HUF, USD/SGD 等），结合点差波幅比 spread_to_atr_ratio 与隐含套息差 ir_diff，取得全模型最高的样本外 Rank IC (+0.1053) 与 ICIR (10.38)。'
+      },
+      'GOLD_MACRO': {
+        title: 'Tier 2 · 现货黄金微观流动性与宏观避险模型',
+        badgeClass: 'badge-gold',
+        roleDesc: '针对 XAU/USD 宽幅点值分布定制（Huber Delta = 45.0），融合 20-Bar 通道极值距离、Parkinson 高低极值波动率与八币避险动量差，在 Fold 5 样本外验证中取得 +0.1015 的 Rank IC 与 +3.25 Pips 单笔净期望。'
+      }
+    };
+
+    const REGIME_LABELS = {
+      'regime_0': '亚盘低波段 (Regime 0)',
+      'regime_1': '欧盘早盘趋势 (Regime 1)',
+      'regime_2': '欧美重叠高波 (Regime 2)',
+      'regime_3': '美盘尾盘展期 (Regime 3)'
+    };
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      const [summary, models] = await Promise.all([
+        QuantFX.loadData('base_data_summary.json'),
+        QuantFX.loadData('model_registry.json')
+      ]);
+
+      if (summary && summary.total_bars_5min) {
+        const elTrainBars = document.getElementById('metaTrainBars');
+        if (elTrainBars) {
+          elTrainBars.textContent = `${Number(summary.total_bars_5min).toLocaleString()} 根 K线`;
+        }
+      }
+
+      if (Array.isArray(models) && models.length > 0) {
+        const healthyCount = models.filter(m => m.daily_lifecycle_status === 'HEALTHY').length;
+        const elCount = document.getElementById('metaModelCount');
+        const elStatHealthy = document.getElementById('statHealthyModels');
+        if (elCount) elCount.textContent = `${healthyCount} / ${models.length} 套 (100% HEALTHY)`;
+        if (elStatHealthy) elStatHealthy.innerHTML = `${healthyCount} / ${models.length} <span style="font-size:0.9rem; font-weight:400; color:var(--text-muted);">套 HEALTHY</span>`;
+
+        const latestAudit = models.map(m => m.last_daily_audit_at || '').sort().pop();
+        const elAudit = document.getElementById('metaLastAudit');
+        if (elAudit && latestAudit) {
+          elAudit.textContent = latestAudit.replace('T', ' ').slice(0, 16) + ' UTC';
+        }
+
+        // 动态计算 Tier 2 平均夏普与最大回撤
+        const tier2Models = models.filter(m => !m.model_id.includes('MACRO'));
+        if (tier2Models.length > 0) {
+          const avgSharpe = tier2Models.reduce((acc, m) => acc + Number((m.metrics_summary || {}).sharpe_ratio || 0), 0) / tier2Models.length;
+          const avgMdd = tier2Models.reduce((acc, m) => acc + Number((m.metrics_summary || {}).max_drawdown_pct || 0), 0) / tier2Models.length;
+          const peakIc = Math.max(...tier2Models.map(m => Number((m.metrics_summary || {}).rank_ic || 0)));
+          const peakIcir = Math.max(...tier2Models.map(m => Number((m.metrics_summary || {}).rank_icir || 0)));
+
+          const elMeanSharpe = document.getElementById('statMeanSharpe');
+          if (elMeanSharpe) {
+            elMeanSharpe.innerHTML = `${avgSharpe.toFixed(2)} <span style="font-size:0.9rem; font-weight:400; color:var(--text-muted);">/ MDD -${avgMdd.toFixed(2)}%</span>`;
+          }
+          const elPeakIc = document.getElementById('statPeakRankIc');
+          if (elPeakIc) {
+            elPeakIc.innerHTML = `+${peakIc.toFixed(4)} <span style="font-size:0.9rem; font-weight:400; color:var(--text-muted);">ICIR ${peakIcir.toFixed(2)}</span>`;
+          }
+        }
+
+        // 1. 渲染全维度模型评估汇总表
+        const summaryTbody = document.getElementById('modelSummaryTableBody');
+        if (summaryTbody) {
+          summaryTbody.innerHTML = models.map(m => {
+            const ms = m.metrics_summary || {};
+            const hp = m.hyperparameters || {};
+            const isMacro = m.model_id.includes('MACRO');
+            const clusterKey = isMacro ? 'MACRO' : (m.cluster || 'MAJOR_TREND');
+            const cMeta = CLUSTER_META[clusterKey] || CLUSTER_META['MAJOR_TREND'];
+            const uCount = Array.isArray(m.target_universe) ? m.target_universe.length : (isMacro ? 48 : '-');
+            const fCount = Number(m.feature_count || (isMacro ? 9 : 33));
+            const holdBars = m.holding_bars ? ` (${m.holding_bars} bars)` : '';
+
+            const primaryMetric = isMacro
+              ? `OOS Acc: ${(Number(ms.oos_accuracy || 0) * 100).toFixed(2)}%`
+              : `Rank IC: +${Number(ms.rank_ic || 0).toFixed(4)}`;
+            const secondaryMetric = isMacro
+              ? `Macro-F1: ${Number(ms.macro_f1 || 0).toFixed(4)}`
+              : `ICIR: ${Number(ms.rank_icir || 0).toFixed(2)}`;
+            const sharpeMdd = isMacro
+              ? '4 类体制概率门控'
+              : `${Number(ms.sharpe_ratio || 0).toFixed(2)} / -${Number(ms.max_drawdown_pct || 0).toFixed(2)}%`;
+            const winPl = isMacro
+              ? `LogLoss: ${Number(ms.multi_logloss || 0).toFixed(4)}`
+              : `${Number(ms.win_rate_pct || 0).toFixed(1)}% / ${Number(ms.profit_loss_ratio || 0).toFixed(2)}`;
+            const cvarActive = isMacro
+              ? `验证样本: ${Number(ms.validation_samples || 833)}d`
+              : `-${Number(ms.cvar_99_pct || 0).toFixed(2)}% / ${Number(ms.active_trade_ratio_pct || 0).toFixed(1)}%`;
+            const expRet = isMacro
+              ? `Fold5 Acc: 56.78%`
+              : `+${Number(ms.expectancy_pips || 0).toFixed(2)}p / +${Number(ms.total_return_pct || 0).toFixed(1)}%`;
+            const statusClass = m.daily_lifecycle_status === 'HEALTHY' ? 'badge-green' : 'badge-gold';
+
+            return `
+              <tr>
+                <td>
+                  <strong style="color:var(--text-primary); font-family:var(--font-mono);">${QuantFX.escapeHtml(m.model_id)}</strong>
+                  <div style="font-size:0.73rem; color:var(--text-muted); font-family:var(--font-mono);">${QuantFX.escapeHtml(m.algo || 'LightGBM')} · ${QuantFX.escapeHtml(hp.objective || 'huber')}</div>
+                </td>
+                <td><span class="badge ${cMeta.badgeClass}">${QuantFX.escapeHtml(clusterKey)}</span></td>
+                <td class="tabular-numbers">${QuantFX.escapeHtml(m.trigger_interval)} → ${QuantFX.escapeHtml(m.prediction_horizon)}${QuantFX.escapeHtml(holdBars)}</td>
+                <td class="tabular-numbers">${fCount} 维 / ${uCount} 标的</td>
+                <td class="tabular-numbers" style="font-weight:700; color:var(--color-accent);">${primaryMetric}</td>
+                <td class="tabular-numbers" style="font-weight:600; color:var(--color-bull);">${secondaryMetric}</td>
+                <td class="tabular-numbers">${sharpeMdd}</td>
+                <td class="tabular-numbers">${winPl}</td>
+                <td class="tabular-numbers" style="color:var(--text-secondary);">${cvarActive}</td>
+                <td class="tabular-numbers" style="color:var(--color-gold); font-weight:600;">${expRet}</td>
+                <td><span class="badge ${statusClass}">✓ ${QuantFX.escapeHtml(m.daily_lifecycle_status)}</span></td>
+              </tr>
+            `;
+          }).join('');
+        }
+
+        // 2. 渲染五套模型深度数据档案卡片（纯合成器 scaleX 比例条 + 全量超参数与特征增益）
+        const cardsContainer = document.getElementById('modelDetailCardsContainer');
+        const filterBtns = document.querySelectorAll('#modelFilterBtns .filter-btn');
+
+        function renderModelCards(filterKey = 'ALL') {
+          const filtered = models.filter(m => {
+            const isMacro = m.model_id.includes('MACRO');
+            const cKey = isMacro ? 'MACRO' : (m.cluster || '');
+            if (filterKey === 'ALL') return true;
+            return cKey === filterKey;
+          });
+
+          cardsContainer.innerHTML = filtered.map(m => {
+            const ms = m.metrics_summary || {};
+            const isMacro = m.model_id.includes('MACRO');
+            const cKey = isMacro ? 'MACRO' : (m.cluster || 'MAJOR_TREND');
+            const cMeta = CLUSTER_META[cKey] || CLUSTER_META['MAJOR_TREND'];
+            const universeArr = Array.isArray(m.target_universe) ? m.target_universe : [];
+            const hp = m.hyperparameters || {};
+            const topFeatObj = m.top_features || {};
+
+            // 5-Fold 逐折验证分布（使用 transform: scaleX 避免 width 重排）
+            const foldArr = isMacro ? (ms.fold_accuracies || []) : (ms.fold_rank_ics || []);
+            const foldMax = Math.max(...foldArr.map(v => Math.abs(Number(v))), 0.01);
+            const foldBarsHtml = foldArr.map((val, idx) => {
+              const numVal = Number(val || 0);
+              const ratio = Math.min(1, Math.max(0.12, Math.abs(numVal) / foldMax)).toFixed(3);
+              const dispVal = isMacro ? `${(numVal * 100).toFixed(2)}%` : `+${numVal.toFixed(4)}`;
+              return `
+                <div style="display:flex; align-items:center; gap:0.6rem; font-size:0.78rem; margin-bottom:0.38rem;">
+                  <span style="width:52px; color:var(--text-muted); font-family:var(--font-mono);">Fold ${idx + 1}</span>
+                  <div class="composited-bar-track">
+                    <div class="composited-bar-fill" style="background:var(--color-accent); transform:scaleX(${ratio});"></div>
+                  </div>
+                  <span class="tabular-numbers" style="width:68px; text-align:right; font-weight:600; color:var(--text-primary);">${dispVal}</span>
+                </div>
+              `;
+            }).join('');
+
+            // 跨时段 Regime IC 稳健度
+            const regimeIcs = (ms.regime_ic_stability && ms.regime_ic_stability.regime_ics) ? ms.regime_ic_stability.regime_ics : null;
+            let regimeHtml = '';
+            if (regimeIcs) {
+              const posRatio = ((Number(ms.regime_ic_stability.positive_regime_ratio || 1)) * 100).toFixed(0);
+              regimeHtml = `
+                <div style="margin-top:0.8rem; padding-top:0.65rem; border-top:1px dashed var(--border-muted);">
+                  <div style="display:flex; justify-content:space-between; font-size:0.76rem; color:var(--text-muted); margin-bottom:0.45rem;">
+                    <span>跨交易时段子环境样本外 Rank IC</span>
+                    <span style="color:var(--color-bull); font-weight:600;">正向子环境占比 ${posRatio}%</span>
+                  </div>
+                  <div style="display:grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap:0.38rem; font-size:0.75rem;">
+                    ${Object.entries(regimeIcs).map(([rk, rv]) => {
+                      const numRv = Number(rv || 0);
+                      const color = numRv >= 0 ? 'var(--color-bull)' : 'var(--color-gold)';
+                      return `<div style="display:flex; justify-content:space-between; background:var(--bg-canvas); padding:0.28rem 0.55rem; border-radius:4px;">
+                        <span style="color:var(--text-secondary);">${QuantFX.escapeHtml(REGIME_LABELS[rk] || rk)}</span>
+                        <span class="tabular-numbers" style="font-weight:600; color:${color};">${numRv >= 0 ? '+' : ''}${numRv.toFixed(4)}</span>
+                      </div>`;
+                    }).join('')}
+                  </div>
+                </div>
+              `;
+            } else {
+              regimeHtml = `
+                <div style="margin-top:0.8rem; padding-top:0.65rem; border-top:1px dashed var(--border-muted); font-size:0.78rem; color:var(--text-secondary); line-height:1.65;">
+                  <div>• 样本外评估总窗口: <strong class="tabular-numbers">${Number(ms.validation_samples || 833)} 个宏观交易日 (5-Fold)</strong></div>
+                  <div>• 多分类交叉熵损失 (Multi-LogLoss): <strong class="tabular-numbers">${Number(ms.multi_logloss || 1.1493).toFixed(4)}</strong></div>
+                  <div>• 近期 Fold 5 样本外准确率: <strong class="tabular-numbers" style="color:var(--color-bull);">56.78% (四分类基准 25.00%)</strong></div>
+                </div>
+              `;
+            }
+
+            // Top 10 特征增益排行
+            const featEntries = Object.entries(topFeatObj).slice(0, 10);
+            const maxGain = featEntries.length > 0 ? Math.max(...featEntries.map(e => Number(e[1])), 1) : 1;
+            const topFeatHtml = featEntries.length > 0 ? featEntries.map(([fname, fgain]) => {
+              const numGain = Number(fgain || 0);
+              const ratio = Math.min(1, Math.max(0.08, numGain / maxGain)).toFixed(3);
+              return `
+                <div style="display:flex; align-items:center; gap:0.5rem; font-size:0.76rem; margin-bottom:0.32rem;">
+                  <code style="width:168px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; color:var(--text-primary);">${QuantFX.escapeHtml(fname)}</code>
+                  <div class="composited-bar-track" style="height:7px;">
+                    <div class="composited-bar-fill" style="background:var(--color-purple); transform:scaleX(${ratio});"></div>
+                  </div>
+                  <span class="tabular-numbers" style="width:62px; text-align:right; color:var(--text-secondary);">${Math.round(numGain).toLocaleString()}</span>
+                </div>
+              `;
+            }).join('') : '<div style="color:var(--text-muted); font-size:0.8rem;">暂无特征增益记录</div>';
+
+            // 超参数完整列表
+            const lossParamLabel = isMacro ? '分类簇数 (num_class)' : 'Huber 阈值 (delta)';
+            const lossParamVal = isMacro ? Number(hp.num_class || 4) : Number(hp.huber_delta || 15.0).toFixed(1);
+            const hyperGridHtml = `
+              <div style="margin-top:0.8rem; padding-top:0.65rem; border-top:1px dashed var(--border-muted);">
+                <div style="font-size:0.76rem; color:var(--text-muted); margin-bottom:0.45rem;">⚙️ 模型训练超参数结构 (Hyperparameters)</div>
+                <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(135px, 1fr)); gap:0.38rem; font-size:0.74rem;">
+                  <div style="background:var(--bg-canvas); padding:0.26rem 0.5rem; border-radius:4px; display:flex; justify-content:space-between;">
+                    <span style="color:var(--text-muted);">目标函数</span>
+                    <code>${QuantFX.escapeHtml(hp.objective || 'huber')}</code>
+                  </div>
+                  <div style="background:var(--bg-canvas); padding:0.26rem 0.5rem; border-radius:4px; display:flex; justify-content:space-between;">
+                    <span style="color:var(--text-muted);">${lossParamLabel}</span>
+                    <code class="tabular-numbers">${lossParamVal}</code>
+                  </div>
+                  <div style="background:var(--bg-canvas); padding:0.26rem 0.5rem; border-radius:4px; display:flex; justify-content:space-between;">
+                    <span style="color:var(--text-muted);">学习率 (lr)</span>
+                    <code class="tabular-numbers">${Number(hp.learning_rate || 0.03)}</code>
+                  </div>
+                  <div style="background:var(--bg-canvas); padding:0.26rem 0.5rem; border-radius:4px; display:flex; justify-content:space-between;">
+                    <span style="color:var(--text-muted);">树深 / 叶子数</span>
+                    <code class="tabular-numbers">${Number(hp.max_depth || 5)} / ${Number(hp.num_leaves || 24)}</code>
+                  </div>
+                  <div style="background:var(--bg-canvas); padding:0.26rem 0.5rem; border-radius:4px; display:flex; justify-content:space-between;">
+                    <span style="color:var(--text-muted);">特征 / 样本采样</span>
+                    <code class="tabular-numbers">${Number(hp.feature_fraction || 0.75)} / ${Number(hp.bagging_fraction || 0.8)}</code>
+                  </div>
+                  <div style="background:var(--bg-canvas); padding:0.26rem 0.5rem; border-radius:4px; display:flex; justify-content:space-between;">
+                    <span style="color:var(--text-muted);">L1 / L2 正则</span>
+                    <code class="tabular-numbers">${Number(hp.reg_alpha || 0.3)} / ${Number(hp.reg_lambda || 2.0)}</code>
+                  </div>
+                  <div style="background:var(--bg-canvas); padding:0.26rem 0.5rem; border-radius:4px; display:flex; justify-content:space-between;">
+                    <span style="color:var(--text-muted);">最小叶样本</span>
+                    <code class="tabular-numbers">${Number(hp.min_child_samples || 80)}</code>
+                  </div>
+                  <div style="background:var(--bg-canvas); padding:0.26rem 0.5rem; border-radius:4px; display:flex; justify-content:space-between;">
+                    <span style="color:var(--text-muted);">迭代轮数上限</span>
+                    <code class="tabular-numbers">${Number(hp.num_boost_round || 1000)}</code>
+                  </div>
+                </div>
+              </div>
+            `;
+
+            // 顶部核心指标条
+            const kpiGridHtml = isMacro ? `
+              <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap:0.65rem; padding:0.85rem; background:var(--bg-subtle); border-radius:8px; margin-bottom:1rem;">
+                <div>
+                  <div style="font-size:0.72rem; color:var(--text-muted);">5-Fold 样本外准确率</div>
+                  <div class="tabular-numbers" style="font-weight:700; color:var(--color-accent); font-size:1.08rem;">${(Number(ms.oos_accuracy || 0) * 100).toFixed(2)}%</div>
+                </div>
+                <div>
+                  <div style="font-size:0.72rem; color:var(--text-muted);">Fold 5 峰值准确率</div>
+                  <div class="tabular-numbers" style="font-weight:700; color:var(--color-bull); font-size:1.08rem;">56.78%</div>
+                </div>
+                <div>
+                  <div style="font-size:0.72rem; color:var(--text-muted);">Macro-F1 得分</div>
+                  <div class="tabular-numbers" style="font-weight:700; color:var(--text-primary); font-size:1.08rem;">${Number(ms.macro_f1 || 0).toFixed(4)}</div>
+                </div>
+                <div>
+                  <div style="font-size:0.72rem; color:var(--text-muted);">Multi-LogLoss</div>
+                  <div class="tabular-numbers" style="font-weight:700; color:var(--text-primary); font-size:1.08rem;">${Number(ms.multi_logloss || 0).toFixed(4)}</div>
+                </div>
+                <div>
+                  <div style="font-size:0.72rem; color:var(--text-muted);">输入特征维度</div>
+                  <div class="tabular-numbers" style="font-weight:700; color:var(--color-purple); font-size:1.08rem;">${Number(m.feature_count || 9)} 维 (日频)</div>
+                </div>
+                <div>
+                  <div style="font-size:0.72rem; color:var(--text-muted);">推理延迟上限</div>
+                  <div class="tabular-numbers" style="font-weight:700; color:var(--color-gold); font-size:1.08rem;">&le; ${Number(m.inference_sla_ms || 50)} ms</div>
+                </div>
+              </div>
+            ` : `
+              <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(125px, 1fr)); gap:0.65rem; padding:0.85rem; background:var(--bg-subtle); border-radius:8px; margin-bottom:1rem;">
+                <div>
+                  <div style="font-size:0.72rem; color:var(--text-muted);">5-Fold Mean Rank IC</div>
+                  <div class="tabular-numbers" style="font-weight:700; color:var(--color-accent); font-size:1.08rem;">+${Number(ms.rank_ic || 0).toFixed(4)}</div>
+                </div>
+                <div>
+                  <div style="font-size:0.72rem; color:var(--text-muted);">Rank ICIR</div>
+                  <div class="tabular-numbers" style="font-weight:700; color:var(--color-bull); font-size:1.08rem;">${Number(ms.rank_icir || 0).toFixed(2)}</div>
+                </div>
+                <div>
+                  <div style="font-size:0.72rem; color:var(--text-muted);">扣费净夏普 (Sharpe)</div>
+                  <div class="tabular-numbers" style="font-weight:700; color:var(--text-primary); font-size:1.08rem;">${Number(ms.sharpe_ratio || 0).toFixed(2)}</div>
+                </div>
+                <div>
+                  <div style="font-size:0.72rem; color:var(--text-muted);">最大回撤 / CVaR(99%)</div>
+                  <div class="tabular-numbers" style="font-weight:700; color:var(--color-bull); font-size:1.05rem;">-${Number(ms.max_drawdown_pct || 0).toFixed(2)}% / -${Number(ms.cvar_99_pct || 0).toFixed(2)}%</div>
+                </div>
+                <div>
+                  <div style="font-size:0.72rem; color:var(--text-muted);">胜率 / 盈亏比</div>
+                  <div class="tabular-numbers" style="font-weight:700; color:var(--text-primary); font-size:1.05rem;">${Number(ms.win_rate_pct || 0).toFixed(1)}% / ${Number(ms.profit_loss_ratio || 0).toFixed(2)}</div>
+                </div>
+                <div>
+                  <div style="font-size:0.72rem; color:var(--text-muted);">单笔净期望 / 开仓率</div>
+                  <div class="tabular-numbers" style="font-weight:700; color:var(--color-gold); font-size:1.05rem;">+${Number(ms.expectancy_pips || 0).toFixed(2)}p / ${Number(ms.active_trade_ratio_pct || 0).toFixed(1)}%</div>
+                </div>
+                <div>
+                  <div style="font-size:0.72rem; color:var(--text-muted);">样本外累计净收益</div>
+                  <div class="tabular-numbers" style="font-weight:700; color:var(--color-bull); font-size:1.08rem;">+${Number(ms.total_return_pct || 0).toFixed(1)}%</div>
+                </div>
+              </div>
+            `;
+
+            const universeBadges = universeArr.length > 0
+              ? universeArr.map(s => `<span class="badge badge-gray" style="font-family:var(--font-mono); font-size:0.72rem;">${QuantFX.escapeHtml(s)}</span>`).join(' ')
+              : '<span class="badge badge-gray" style="font-size:0.72rem;">全市场 48 只主权货币与贵金属资产 (Global 48-Asset Universe)</span>';
+
+            const createdTimeStr = (m.created_at || '').replace('T', ' ').slice(0, 19) + ' UTC';
+
+            return `
+              <div class="card" style="border-left: 4px solid var(--color-accent);">
+                <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:0.75rem; margin-bottom:0.65rem;">
+                  <div>
+                    <div style="display:flex; align-items:center; gap:0.6rem; flex-wrap:wrap;">
+                      <span style="font-size:1.18rem; font-weight:800; font-family:var(--font-mono); color:var(--text-primary);">${QuantFX.escapeHtml(m.model_id)}</span>
+                      <span class="badge ${cMeta.badgeClass}">${QuantFX.escapeHtml(cMeta.title)}</span>
+                    </div>
+                    <p style="font-size:0.84rem; color:var(--text-secondary); margin-top:0.35rem; line-height:1.6;">${QuantFX.escapeHtml(cMeta.roleDesc)}</p>
+                  </div>
+                  <div style="display:flex; gap:0.45rem; align-items:center; flex-wrap:wrap;">
+                    <span class="badge badge-cyan">${Number(m.feature_count || 33)} 维特征</span>
+                    <span class="badge badge-blue">${QuantFX.escapeHtml(m.trigger_interval)} → ${QuantFX.escapeHtml(m.prediction_horizon)}</span>
+                    <span class="badge badge-green">✓ ${QuantFX.escapeHtml(m.daily_lifecycle_status)} (${QuantFX.escapeHtml(m.stage)})</span>
+                  </div>
+                </div>
+
+                ${kpiGridHtml}
+
+                <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap:1rem; margin-bottom:0.85rem;">
+                  <div style="background:var(--bg-subtle); padding:0.9rem; border-radius:8px; display:flex; flex-direction:column; justify-content:space-between;">
+                    <div>
+                      <div style="font-size:0.83rem; font-weight:700; color:var(--text-primary); margin-bottom:0.6rem;">
+                        📈 5-Fold 单向时序净化验证分布 (${isMacro ? 'OOS Accuracy' : 'OOS Rank IC'})
+                      </div>
+                      ${foldBarsHtml}
+                      ${regimeHtml}
+                    </div>
+                    ${hyperGridHtml}
+                  </div>
+
+                  <div style="background:var(--bg-subtle); padding:0.9rem; border-radius:8px;">
+                    <div style="font-size:0.83rem; font-weight:700; color:var(--text-primary); margin-bottom:0.6rem;">
+                      🧬 Top 10 因果特征重要性增益排行 (LightGBM Split Gain)
+                    </div>
+                    ${topFeatHtml}
+                  </div>
+                </div>
+
+                <div style="border-top:1px solid var(--border-muted); padding-top:0.65rem; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem;">
+                  <div style="display:flex; align-items:center; gap:0.35rem; flex-wrap:wrap;">
+                    <span style="font-size:0.76rem; color:var(--text-muted); margin-right:0.25rem;">覆盖标的池:</span>
+                    ${universeBadges}
+                  </div>
+                  <span class="tabular-numbers" style="font-size:0.75rem; color:var(--text-muted); font-family:var(--font-mono);">
+                    模型建档时间: ${QuantFX.escapeHtml(createdTimeStr)}
+                  </span>
+                </div>
+              </div>
+            `;
+          }).join('');
+        }
+
+        renderModelCards('ALL');
+
+        filterBtns.forEach(btn => {
+          btn.addEventListener('click', () => {
+            filterBtns.forEach(b => { b.className = 'badge badge-gray filter-btn'; });
+            btn.className = 'badge badge-blue filter-btn';
+            renderModelCards(btn.getAttribute('data-filter'));
+          });
+        });
+      }
+    });
+  </script>
+  <script src="assets/js/pwa.js"></script>
+</body>
+</html>

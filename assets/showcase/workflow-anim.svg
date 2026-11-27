@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 280" width="100%" height="100%">
+  <defs>
+    <linearGradient id="fxWfBg" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#090D14"/>
+      <stop offset="50%" stop-color="#161B22"/>
+      <stop offset="100%" stop-color="#090D14"/>
+    </linearGradient>
+    <linearGradient id="fxPipe" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#58A6FF"/>
+      <stop offset="50%" stop-color="#BC8CFF"/>
+      <stop offset="100%" stop-color="#3FB950"/>
+    </linearGradient>
+  </defs>
+
+  <style>
+    .title { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; font-weight: 800; fill: #F0F6FC; }
+    .sub { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #8B949E; font-size: 11.5px; }
+    .mono { font-family: "JetBrains Mono", Consolas, monospace; font-size: 11px; }
+    .flow-dash { stroke-dasharray: 8 6; animation: fxDash 1.4s linear infinite; }
+    @keyframes fxDash {
+      to { stroke-dashoffset: -28; }
+    }
+  </style>
+
+  <rect width="1200" height="280" rx="14" fill="url(#fxWfBg)" stroke="#30363D" stroke-width="2"/>
+  <text x="36" y="38" class="title" font-size="15">QUANT-FX INTRADAY ARCHITECTURE (144-PARTITION LAKE → CBSI &amp; PURGED CV → OANDA SANDBOX → STATIC UI)</text>
+  <text x="955" y="38" class="mono" fill="#3FB950">● SUB-30MS INFERENCE LOOP</text>
+
+  <line x1="280" y1="145" x2="335" y2="145" stroke="url(#fxPipe)" stroke-width="3" class="flow-dash"/>
+  <line x1="575" y1="145" x2="630" y2="145" stroke="url(#fxPipe)" stroke-width="3" class="flow-dash"/>
+  <line x1="870" y1="145" x2="925" y2="145" stroke="url(#fxPipe)" stroke-width="3" class="flow-dash"/>
+
+  <!-- Stage 1 -->
+  <g transform="translate(36, 62)">
+    <rect width="244" height="176" rx="12" fill="#0D1117" stroke="#58A6FF" stroke-width="2"/>
+    <rect x="14" y="14" width="84" height="22" rx="5" fill="#1F2937"/>
+    <text x="24" y="29" class="mono" fill="#79C0FF">STAGE 01</text>
+    <text x="16" y="58" class="title" font-size="15">48 标的三级时序数据湖</text>
+    <text x="16" y="82" class="sub">• G7直盘 + G8交叉 + 新兴 + 黄金</text>
+    <text x="16" y="102" class="sub">• 1day / 1h / 5min 共 144 分区</text>
+    <text x="16" y="122" class="sub">• 7.5s 令牌桶看门狗零 429 报错</text>
+    <rect x="16" y="138" width="212" height="24" rx="6" fill="#161B22" stroke="#30363D"/>
+    <text x="26" y="154" class="mono" fill="#58A6FF">D1~D5 Audit: 100.0% Pass</text>
+  </g>
+
+  <!-- Stage 2 -->
+  <g transform="translate(333, 62)">
+    <rect width="244" height="176" rx="12" fill="#0D1117" stroke="#BC8CFF" stroke-width="2"/>
+    <rect x="14" y="14" width="84" height="22" rx="5" fill="#271E36"/>
+    <text x="24" y="29" class="mono" fill="#D2A8FF">STAGE 02</text>
+    <text x="16" y="58" class="title" font-size="15">CBSI 解耦与 GCP Spot 训练</text>
+    <text x="16" y="82" class="sub">• 8 大主权法币强弱指数 (CBSI)</text>
+    <text x="16" y="102" class="sub">• 33维无前视特征 + 5-Fold 净化验证</text>
+    <text x="16" y="122" class="sub">• 17:05 ET 每日淘汰重训即用即毁</text>
+    <rect x="16" y="138" width="212" height="24" rx="6" fill="#161B22" stroke="#30363D"/>
+    <text x="26" y="154" class="mono" fill="#D2A8FF">5 Active Model Bundles</text>
+  </g>
+
+  <!-- Stage 3 -->
+  <g transform="translate(630, 62)">
+    <rect width="244" height="176" rx="12" fill="#0D1117" stroke="#3FB950" stroke-width="2"/>
+    <rect x="14" y="14" width="84" height="22" rx="5" fill="#122D1F"/>
+    <text x="24" y="29" class="mono" fill="#56D364">STAGE 03</text>
+    <text x="16" y="58" class="title" font-size="15">OANDA 沙盘与点差熔断</text>
+    <text x="16" y="82" class="sub">• 内存树热推理 (&lt;30ms) 预测 15~60m</text>
+    <text x="16" y="102" class="sub">• &lt;=1.8x 动态点差拦截 + 原子止损</text>
+    <text x="16" y="122" class="sub">• 16:45 ET 强平 &amp; 1.5% Kill Switch</text>
+    <rect x="16" y="138" width="212" height="24" rx="6" fill="#161B22" stroke="#30363D"/>
+    <text x="26" y="154" class="mono" fill="#3FB950">OANDA v20 Practice Only</text>
+  </g>
+
+  <!-- Stage 4 -->
+  <g transform="translate(925, 62)">
+    <rect width="239" height="176" rx="12" fill="#0D1117" stroke="#F59E0B" stroke-width="2"/>
+    <rect x="14" y="14" width="84" height="22" rx="5" fill="#2E2312"/>
+    <text x="24" y="29" class="mono" fill="#FBBF24">STAGE 04</text>
+    <text x="16" y="58" class="title" font-size="15">纯静态外汇监控大盘</text>
+    <text x="16" y="82" class="sub">• 脱敏导出 5 份只读 JSON 契约</text>
+    <text x="16" y="102" class="sub">• 15日 SVG Sparkline 微走势</text>
+    <text x="16" y="122" class="sub">• PC 宽屏 &amp; 移动竖屏零横向溢出</text>
+    <rect x="16" y="138" width="207" height="24" rx="6" fill="#161B22" stroke="#30363D"/>
+    <text x="26" y="154" class="mono" fill="#FBBF24">fx.evotensor.dev (MIT)</text>
+  </g>
+</svg>
